@@ -1,30 +1,40 @@
-
 import React, { useState } from 'react';
 
-const PLANT_DB = [
-  { name: 'Gʻoʻza (Paxta)', category: 'Texnik', img: 'https://images.unsplash.com/photo-1582214691490-53bc1bfde2f4?auto=format&fit=crop&w=600&q=80', diseases: ['Vilt', 'Shira', 'Bakterial kuyish', 'Kuzgi tunlam'], risk: 'High', origin: 'Fargʻona' },
-  { name: 'Bugʻdoy', category: 'Don', img: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=600&q=80', diseases: ['Sariq zang', 'Qora don', 'Septorioz'], risk: 'Medium', origin: 'Sirdaryo' },
-  { name: 'Pomidor', category: 'Sabzavot', img: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=600&q=80', diseases: ['Fitoftoroz', 'Mozaika', 'Fuzarioz', 'Zang'], risk: 'High', origin: 'Toshkent' },
-  { name: 'Uzum', category: 'Meva', img: 'https://images.unsplash.com/photo-1596362438670-381dc35ff1eb?auto=format&fit=crop&w=600&q=80', diseases: ['Oidium', 'Mildyu', 'Kul', 'Antraknoz'], risk: 'Medium', origin: 'Parkent' },
-  { name: 'Anor', category: 'Meva', img: 'https://images.unsplash.com/photo-1615485437887-4d6d6daece60?auto=format&fit=crop&w=600&q=80', diseases: ['Don chirishi', 'Meva biti', 'Barg toʻkilishi'], risk: 'Low', origin: 'Quva' },
-  { name: 'Anjir', category: 'Meva', img: 'https://images.unsplash.com/photo-1620023023078-4ea8c2794cc5?auto=format&fit=crop&w=600&q=80', diseases: ['Barg zangi', 'Anjir shirasi'], risk: 'Low', origin: 'Xiva' },
-  { name: 'Shaftoli', category: 'Meva', img: 'https://images.unsplash.com/photo-1528821128474-27f9ee07974e?auto=format&fit=crop&w=600&q=80', diseases: ['Barg bujmayishi', 'Moniolioz', 'Zang'], risk: 'High', origin: 'Fargʻona' },
-  { name: 'Qovun', category: 'Poliz', img: 'https://images.unsplash.com/photo-1587049352847-81a56d773c1c?auto=format&fit=crop&w=600&q=80', diseases: ['Oq chirish', 'Qovun pashshasi', 'Ildiz chirishi'], risk: 'High', origin: 'Mirzachoʻl' },
-  { name: 'Karam', category: 'Sabzavot', img: 'https://images.unsplash.com/photo-1557844352-761f2565b576?auto=format&fit=crop&w=600&q=80', diseases: ['Qora oyoq', 'Oila kuyishi', 'Karam biti'], risk: 'Medium', origin: 'Zangiota' },
-  { name: 'Kartoshka', category: 'Sabzavot', img: 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=600&q=80', diseases: ['Fitoftora', 'Alternarioz', 'Kolorado qoʻngʻizi', 'Makrosporioz'], risk: 'High', origin: 'Zomin' },
-  { name: 'Bodring', category: 'Sabzavot', img: 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=600&q=80', diseases: ['Soxta un shudring', 'Kukundor shira'], risk: 'High', origin: 'Qibray' },
-  { name: 'Gilos', category: 'Meva', img: 'https://images.unsplash.com/photo-1559181567-c3190ca9959b?auto=format&fit=crop&w=600&q=80', diseases: ['Kokkomikoz', 'Teshikli dogʻlanish', 'Gilos pashshasi'], risk: 'Medium', origin: 'Namangan' },
-  { name: 'Oʻrik', category: 'Meva', img: 'https://images.unsplash.com/photo-1629828552108-a00d8beeb9ce?auto=format&fit=crop&w=600&q=80', diseases: ['Klyasterosporioz', 'Monilioz chirish'], risk: 'Medium', origin: 'Samarqand' },
-  { name: 'Yongʻoq', category: 'Meva', img: 'https://images.unsplash.com/photo-1596700542368-8e68db35b128?auto=format&fit=crop&w=600&q=80', diseases: ['Bakterioz', 'Antraknoz', 'Yongʻoq kuyasi'], risk: 'Low', origin: 'Boʻstonliq' },
-  { name: 'Limon', category: 'Meva', img: 'https://images.unsplash.com/photo-1582294432170-13f5728a47fd?auto=format&fit=crop&w=600&q=80', diseases: ['Gommoz', 'Meva toʻkilishi', 'Sitrus trips'], risk: 'Medium', origin: 'Toshkent' },
-  { name: 'Tarvuz', category: 'Poliz', img: 'https://images.unsplash.com/photo-1589984662646-e7b2e4962f18?auto=format&fit=crop&w=600&q=80', diseases: ['Antraknoz', 'Fuzarioz soʻlish', 'Shira'], risk: 'Medium', origin: 'Qashqadaryo' },
-  { name: 'Makkajoʻxori', category: 'Don', img: 'https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=600&q=80', diseases: ['Qorakuya', 'Poya chirishi'], risk: 'Low', origin: 'Andijon' },
-  { name: 'Piyoz', category: 'Sabzavot', img: 'https://images.unsplash.com/photo-1620574387735-3624d75b2dbc?auto=format&fit=crop&w=600&q=80', diseases: ['Aka chirish', 'Peronosporoz', 'Piyoz pashshasi'], risk: 'Medium', origin: 'Surxondaryo' }
+interface Plant {
+  name: string;
+  category: string;
+  img: string;
+  diseases: string[];
+  risk: string;
+  origin: string;
+  description: string;
+}
+
+const PLANT_DB: Plant[] = [
+  { name: 'Gʻoʻza (Paxta)', category: 'Texnik', img: 'https://images.unsplash.com/photo-1574676449170-07e3a9dc7489?auto=format&fit=crop&w=600&q=80', diseases: ['Vilt', 'Shira', 'Bakterial kuyish', 'Kuzgi tunlam'], risk: 'High', origin: 'Fargʻona', description: 'Gʻoʻza Oʻzbekistonning asosiy texnik ekini boʻlib, asosan toʻqimachilik sanoati va yogʻ ishlab chiqarishda ishlatiladi. Issiq va yorugʻsevar oʻsimlik. Vegetatsiya davri iqlimga qarab 110-140 kunni tashkil etadi.' },
+  { name: 'Bugʻdoy', category: 'Don', img: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=600&q=80', diseases: ['Sariq zang', 'Qora don', 'Septorioz'], risk: 'Medium', origin: 'Sirdaryo', description: 'Oʻzbekistonda eng muhim oziq-ovqat ekini. Asosan kuzgi va bahorgi turlari ekiladi. Yuqori unumdor tuproqni talab etadi, namlik va oʻgʻitlarga sezuvchan.' },
+  { name: 'Pomidor', category: 'Sabzavot', img: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=600&q=80', diseases: ['Fitoftoroz', 'Mozaika', 'Fuzarioz', 'Zang'], risk: 'High', origin: 'Toshkent', description: 'Issiqxona va ochiq dalalarda eng koʻp yetishtiriladigan darmondorilarga boy sabzavot. Tuproqni doimiy namlikda ushlab turish va vaqtida kaliy, fosfor oʻgʻitlari bilan taʼminlash talab etiladi.' },
+  { name: 'Uzum', category: 'Meva', img: 'https://images.unsplash.com/photo-1537260592962-e64e9a11acda?auto=format&fit=crop&w=600&q=80', diseases: ['Oidium', 'Mildyu', 'Kul', 'Antraknoz'], risk: 'Medium', origin: 'Parkent', description: 'Tokchilik - mamlakatimiz qishloq xoʻjaligining asosiy tarmoqlaridan biri. Uzumni meva, mayiz va vitikultura mahsulotlari sifatida saqlash va sotish qulay boʻlgan yuqori rentabelli ekin.' },
+  { name: 'Anor', category: 'Meva', img: 'https://images.unsplash.com/photo-1591118678235-900350711cc3?auto=format&fit=crop&w=600&q=80', diseases: ['Don chirishi', 'Meva biti', 'Barg toʻkilishi'], risk: 'Low', origin: 'Quva', description: 'Subtropik hududlar uchun moslashgan shifobaxsh meva. Issiqqa gʻoyat chidamli, suvga esa nisbatan talabchan. Daraxtlari toʻgʻri shakl berishni va tuproqni yumshatishni yaxshi koʻradi.' },
+  { name: 'Anjir', category: 'Meva', img: 'https://images.unsplash.com/photo-1578330089849-0d12aae934dd?auto=format&fit=crop&w=600&q=80', diseases: ['Barg zangi', 'Anjir shirasi'], risk: 'Low', origin: 'Xiva', description: 'Juda shirin, foydali vitaminlar xazinasi. Kuzda pishib yetiladi, barglari xalq tabobatida turli sharbatlar qilib ichiladi. Issiqlik harorati barqaror boʻlgan hududlarda yaxshi koʻkaradi.' },
+  { name: 'Shaftoli', category: 'Meva', img: 'https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=600&q=80', diseases: ['Barg bujmayishi', 'Moniolioz', 'Zang'], risk: 'High', origin: 'Fargʻona', description: 'Turli iqlim injiqliklariga tez taʼsir qiluvchi subtropik oʻsimlik. Ertapisharligi va yuqori darajadagi taʼm sifatiga ega ekani bilan mashhur, koʻpincha sovuq shamollardan ehtiyot qilinadi.' },
+  { name: 'Qovun', category: 'Poliz', img: 'https://images.unsplash.com/photo-1628085437894-3aabfe245ff6?auto=format&fit=crop&w=600&q=80', diseases: ['Oq chirish', 'Qovun pashshasi', 'Ildiz chirishi'], risk: 'High', origin: 'Mirzachoʻl', description: 'Uzoq quyoshda yetilishi bilan birga uzoq masofaga transportirovka ham qilinadi. Ekish oldidan tuproq qumloq, serunum va yaxshi ob-havo hududlar tavsiya qilinadi.' },
+  { name: 'Karam', category: 'Sabzavot', img: 'https://images.unsplash.com/photo-1557844352-761f2565b576?auto=format&fit=crop&w=600&q=80', diseases: ['Qora oyoq', 'Oila kuyishi', 'Karam biti'], risk: 'Medium', origin: 'Zangiota', description: 'Salqin havo peyroq va ochiq dalada keng koʻp ekiluvchi qishloq xoʻjalik namunasi. Asosan erta bahorda yoki kech yozda rivojlanadi, suvni va toza tuproqni faol oʻzlashtiradi.' },
+  { name: 'Kartoshka', category: 'Sabzavot', img: 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=600&q=80', diseases: ['Fitoftora', 'Alternarioz', 'Kolorado qoʻngʻizi', 'Makrosporioz'], risk: 'High', origin: 'Zomin', description: 'Asosiy oziq-ovqat zaxiralaridan biri hisoblangan, kraxmal va mikroelementlarga ega poliz mahsuloti. Sovuqqa nisbatan chidamli va turli xil iqlim sharoitida oʻsa oladi.' },
+  { name: 'Bodring', category: 'Sabzavot', img: 'https://images.unsplash.com/photo-1599388836267-b50a316ac17a?auto=format&fit=crop&w=600&q=80', diseases: ['Soxta un shudring', 'Kukundor shira'], risk: 'High', origin: 'Qibray', description: 'Namlikni juda yaxshi koʻradigan ekin, ayniqsa issiqxona sharoitlarida yil davomida uzluksiz hosil bera oladigan mahsulot. Tomchilatib sugʻorishga eng zoʻr moslashadiganlardan.' },
+  { name: 'Gilos', category: 'Meva', img: 'https://images.unsplash.com/photo-1559181567-c3190ca9959b?auto=format&fit=crop&w=600&q=80', diseases: ['Kokkomikoz', 'Teshikli dogʻlanish', 'Gilos pashshasi'], risk: 'Medium', origin: 'Namangan', description: 'Hosilga juda erta kiradigan, vitamin C boʻyicha ustun turuvchi gilos Oʻzbekistonda daromadli eksport sifatida barcha bogʻlarda qoʻllaniladi. Gullash davrida issiqlikni katta ahamiyati bor.' },
+  { name: 'Oʻrik', category: 'Meva', img: 'https://images.unsplash.com/photo-1501740941405-b02660237748?auto=format&fit=crop&w=600&q=80', diseases: ['Klyasterosporioz', 'Monilioz chirish'], risk: 'Medium', origin: 'Samarqand', description: 'Yoz chillasiga qadar toʻliq hosili terib olinadigan shirin meva. Ayniqsa turshak tayyorlash uchun sanoat ahamiyatiga koʻra mamlakatimiz iqtisodida alohida oʻringa ega.' },
+  { name: 'Yongʻoq', category: 'Meva', img: 'https://images.unsplash.com/photo-1604085429813-1466dcbcddab?auto=format&fit=crop&w=600&q=80', diseases: ['Bakterioz', 'Antraknoz', 'Yongʻoq kuyasi'], risk: 'Low', origin: 'Boʻstonliq', description: 'Asosan togʻ va togʻ oldi mintaqalarida unib chiquvchi, oqsil va omega-3 yogʻ kislotalariga boy daraxt. Hosil olinishi kech boʻlsada, daraxtning mahsuldorligi va yogʻochining qiymati uzoq yillik.' },
+  { name: 'Limon', category: 'Meva', img: 'https://images.unsplash.com/photo-1609594589252-9ba6a654ca9a?auto=format&fit=crop&w=600&q=80', diseases: ['Gommoz', 'Meva toʻkilishi', 'Sitrus trips'], risk: 'Medium', origin: 'Toshkent', description: 'Issiqlik, parnik va faqat nam tuproqda yetiluvchi efir moyli va sitrus mevalar sinfiga kiruvchi nav. C vitamini bilan sovuqning oldini olishda tibbiyotning eng qadimgi retsepti.' },
+  { name: 'Tarvuz', category: 'Poliz', img: 'https://images.unsplash.com/photo-1589984662646-e7b2e4962f18?auto=format&fit=crop&w=600&q=80', diseases: ['Antraknoz', 'Fuzarioz soʻlish', 'Shira'], risk: 'Medium', origin: 'Qashqadaryo', description: 'Jazirama issiq mintaqalar uchun asosiy tabiat moʻjizasi. Yirik hosili pishguncha oʻziga katta hajmdagi suv energiyasini xotiralar zaxirasida saqlab issiqlikga qarshi oʻsadi.' },
+  { name: 'Makkajoʻxori', category: 'Don', img: 'https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=600&q=80', diseases: ['Qorakuya', 'Poya chirishi'], risk: 'Low', origin: 'Andijon', description: 'Mol, uy hayvonlari hamda qushchilik xoʻjaligini taʼminlash, yirik urugʻlari bilan shirinlik singari isʼtemol orqali barcha dalalar uchun ideal navlardan sanaladi. Shuningdek koʻproq mineral oziq ham soʻrab turadi!' },
+  { name: 'Piyoz', category: 'Sabzavot', img: 'https://images.unsplash.com/photo-1620574387735-3624d75b2dbc?auto=format&fit=crop&w=600&q=80', diseases: ['Aka chirish', 'Peronosporoz', 'Piyoz pashshasi'], risk: 'Medium', origin: 'Surxondaryo', description: 'Antibakteriyal xususiyatlarga boy ildiz-meva, shuningdek keng istemol etiladigan sabzavot boʻlib deyarli hamma turdagi taomning uzviy maxsuloti. Quritilgan holda uzoq yillik vaqtini saqlab bera oladi.' }
 ];
 
 const Database: React.FC = () => {
   const [filter, setFilter] = useState('');
   const [activeTab, setActiveTab] = useState('Barchasi');
+  const [selectedPlant, setSelectedPlant] = useState<Plant | null>(null);
 
   const filtered = PLANT_DB.filter(p => 
     p.name.toLowerCase().includes(filter.toLowerCase()) && 
@@ -78,7 +88,12 @@ const Database: React.FC = () => {
                 </div>
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-8 z-20">
-                 <button className="w-full py-4 bg-white text-slate-900 font-black rounded-2xl text-xs uppercase tracking-widest translate-y-4 group-hover:translate-y-0 transition-transform shadow-xl">Tahlilni oʻqish</button>
+                 <button 
+                  onClick={() => setSelectedPlant(plant)}
+                  className="w-full py-4 bg-white text-slate-900 font-black rounded-2xl text-xs uppercase tracking-widest translate-y-4 group-hover:translate-y-0 transition-transform shadow-xl hover:bg-emerald-50 active:scale-95 duration-200"
+                 >
+                  Tahlilni oʻqish
+                 </button>
               </div>
               <div className="absolute top-6 left-6 px-4 py-2 bg-white/90 backdrop-blur rounded-full text-[9px] font-black uppercase tracking-widest text-slate-900 shadow-lg z-20">
                 {plant.origin}
@@ -112,6 +127,84 @@ const Database: React.FC = () => {
         <div className="py-32 text-center bg-white rounded-[4rem] border-4 border-dashed border-slate-100">
            <p className="text-3xl font-black text-slate-300">Hech qanday maʻlumot topilmadi :(</p>
            <button onClick={() => setFilter('')} className="mt-6 text-emerald-600 font-bold underline">Qidiruvni tozalash</button>
+        </div>
+      )}
+
+      {/* Selected Plant Modal */}
+      {selectedPlant && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-in fade-in duration-200">
+          <div className="bg-white rounded-[2rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] max-w-2xl w-full max-h-[90vh] overflow-y-auto custom-scrollbar transform transition-all animate-in zoom-in-95 duration-300">
+            <div className="relative h-64 md:h-80 w-full overflow-hidden shrink-0">
+              <img src={selectedPlant.img} alt={selectedPlant.name} className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent"></div>
+              
+              <button 
+                onClick={() => setSelectedPlant(null)}
+                className="absolute top-4 right-4 w-10 h-10 bg-white/20 hover:bg-white/40 backdrop-blur rounded-full flex items-center justify-center text-white transition-colors"
+               >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+              
+              <div className="absolute bottom-0 left-0 p-8 w-full">
+                <div className="flex justify-between items-end gap-4">
+                  <div>
+                    <span className="bg-emerald-500 text-white px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-lg mb-2 inline-block">
+                      {selectedPlant.category}
+                    </span>
+                    <h2 className="text-4xl md:text-5xl font-black text-white leading-tight">{selectedPlant.name}</h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="p-8">
+              <div className="flex flex-wrap gap-4 mb-8">
+                <div className="bg-slate-50 px-4 py-3 rounded-xl border border-slate-100 flex-1 min-w-[120px]">
+                  <p className="text-slate-400 text-xs font-bold uppercase tracking-wider mb-1">Xavflilik</p>
+                  <p className={`font-black ${
+                    selectedPlant.risk === 'High' ? 'text-red-500' : 
+                    selectedPlant.risk === 'Medium' ? 'text-orange-500' : 'text-emerald-500'
+                  }`}>{selectedPlant.risk === 'High' ? 'Yuqori xavf' : selectedPlant.risk === 'Medium' ? 'Oʻrta daraja' : 'Sogʻlom'}</p>
+                </div>
+                <div className="bg-slate-50 px-4 py-3 rounded-xl border border-slate-100 flex-1 min-w-[120px]">
+                  <p className="text-slate-400 text-xs font-bold uppercase tracking-wider mb-1">Otilish manzili</p>
+                  <p className="font-black text-slate-800">{selectedPlant.origin}</p>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-black text-slate-900 mb-3 uppercase tracking-wider">Batafsil maʻlumot</h3>
+                <p className="text-slate-600 leading-relaxed indent-4 mb-8">
+                  {selectedPlant.description}
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-black text-slate-900 mb-4 uppercase tracking-wider">Keng tarqalgan kasalliklar (<span className="text-red-500">{selectedPlant.diseases.length}</span>)</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {selectedPlant.diseases.map((d, j) => (
+                    <div key={j} className="flex items-center gap-3 p-3 rounded-xl bg-red-50 border border-red-100 text-red-900 font-bold text-sm">
+                      <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                      </div>
+                      {d}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="mt-10 bg-emerald-50 rounded-2xl p-6 border border-emerald-100 text-center">
+                <p className="text-emerald-800 font-medium mb-4">Kasalliklarga yechim yoki qanday dorilarni ishlatishni bilmoqchimisiz?</p>
+                <a href="/agronom" className="inline-block px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-xl transition-colors shadow-lg shadow-emerald-200">
+                  AI Agronom bilan suhbat
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
