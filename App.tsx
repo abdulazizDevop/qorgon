@@ -72,34 +72,6 @@ const AppContent: React.FC = () => {
           <Route path="/database" element={<Database />} />
           <Route path="/pharmacy" element={<AgroPharmacy />} />
           <Route path="/agronom" element={<AIAgronom />} />
-          <Route path="/about" element={
-            <div className="max-w-4xl mx-auto py-12 px-6 text-center">
-              <h1 className="text-5xl font-black text-slate-900 mb-8 font-serif">Ko'rg'on Ai <span className="text-emerald-600">Missiyasi</span></h1>
-              <p className="text-xl text-slate-600 leading-relaxed font-sans font-light">
-                Bizning maqsadimiz — eng zamonaviy sun'iy intellekt texnologiyalarini oddiy dehqonlar va fermerlar uchun qulay vositaga aylantirish. 
-                O'zbekistonning boy qishloq xo'jaligi salohiyatini raqamli innovatsiyalar orqali yangi bosqichga olib chiqamiz.
-              </p>
-              <div className="max-w-4xl mx-auto py-12 px-6">
-                <h1 className="text-4xl font-black text-slate-900 mb-6 text-center font-serif">Foydalanish <span className="text-emerald-600">Qo'llanmasi</span></h1>
-                <div className="space-y-12">
-                  <div className="flex gap-8 items-start">
-                    <div className="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center font-black shrink-0 font-serif">1</div>
-                    <div>
-                      <h3 className="text-xl font-bold mb-2 font-serif">To'g'ri rasmga olish</h3>
-                      <p className="text-slate-500 font-sans">Bargni yaqin masofadan (15-20 sm), tiniq yorug'likda rasmga oling. Kamera fokuslanganligiga ishonch hosil qiling.</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-8 items-start">
-                    <div className="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center font-black shrink-0 font-serif">2</div>
-                    <div>
-                      <h3 className="text-xl font-bold mb-2 font-serif">Tizimga yuklash</h3>
-                      <p className="text-slate-500 font-sans">Rasmni "Skaner" bo'limiga yuklang. Gemini AI soniyalar ichida barg strukturasini tahlil qiladi.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          } />
           <Route path="/auth" element={
             <div className="max-w-md mx-auto py-24 px-6">
               <div className="bg-white p-10 rounded-[2.5rem] shadow-2xl border border-slate-100 text-center">

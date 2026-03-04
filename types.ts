@@ -38,8 +38,6 @@ export interface RegionOutbreak {
 
 export type AppState = 
   | 'HOME' 
-  | 'ABOUT' 
-  | 'GUIDE' 
   | 'DATABASE' 
   | 'ANALYZER' 
   | 'ANALYZING' 

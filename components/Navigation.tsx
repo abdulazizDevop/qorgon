@@ -14,7 +14,6 @@ const Navigation: React.FC<NavigationProps> = ({ userRole, onLogout }) => {
 
   const navItems: { path: string; label: string; roles: UserRole[] | 'all' }[] = [
     { path: '/', label: 'Bosh sahifa', roles: 'all' },
-    { path: '/about', label: 'Biz haqimizda', roles: 'all' },
     { path: '/analyzer', label: 'AI Skaner', roles: 'all' },
     { path: '/agronom', label: 'AI Agronom', roles: 'all' },
     { path: '/pharmacy', label: 'Agro Dorixona', roles: 'all' },
