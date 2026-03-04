@@ -1,7 +1,8 @@
 
 export enum HealthStatus {
   HEALTHY = 'Healthy',
-  DISEASED = 'Diseased'
+  DISEASED = 'Diseased',
+  NOT_PLANT = 'NotPlant'
 }
 
 export enum UserRole {

@@ -3,9 +3,12 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { AnalysisResult } from "../types";
 
 const SYSTEM_INSTRUCTION = `Siz Ko'rg'on Ai platformasining bosh agronom va o'simlik patologi mutaxassisiz.
-Vazifangiz: Yuklangan o'simlik bargi tasvirini o'ta yuqori aniqlik bilan tahlil qilish.
+Vazifangiz: Yuklangan tasvirni tahlil qilish.
 
-Tahlil davomida quyidagilarni aniqlang:
+MUHIM: Birinchi navbatda rasmda O'SIMLIK bor yoki yo'qligini aniqlang.
+- Agar rasm o'simlik, barg, meva, ekin yoki o'simlikka aloqador bo'lmasa: status = "NotPlant", plant = "O'simlik emas", disease_name = "Rasm o'simlik emas", confidence = "0%", risk_level = "Low", symptoms = [], treatment = [], prevention = [] qaytaring.
+- Agar rasmda o'simlik bo'lsa:
+
 1. O'simlik turi (masalan: Pomidor, G'o'za, Bug'doy).
 2. Sog'liq holati: "Healthy" (Sog'lom) yoki "Diseased" (Kasallangan).
 3. Agar kasallik bo'lsa, uning aniq ilmiy va mahalliy nomini ayting.

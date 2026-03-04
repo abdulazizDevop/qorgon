@@ -1,6 +1,6 @@
 
 import React, { useState, useCallback } from 'react';
-import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
 import Navigation from './components/Navigation';
 import Landing from './components/Landing';
@@ -63,7 +63,7 @@ const AppContent: React.FC = () => {
       <main className="flex-grow">
         <Routes>
           <Route path="/" element={<Landing onStart={handleStart} />} />
-          <Route path="/analyzer" element={<UploadZone onImageSelected={handleImageSelected} />} />
+          <Route path="/analyzer" element={result ? <Navigate to="/analyzer/result" replace /> : <UploadZone onImageSelected={handleImageSelected} />} />
           <Route path="/analyzer/loading" element={<Loading />} />
           <Route path="/analyzer/result" element={result ? <AnalysisResultView result={result} imageUrl={currentImageUrl} onReset={handleReset} /> : <UploadZone onImageSelected={handleImageSelected} />} />
           <Route path="/analyzer/error" element={<ErrorView message={error} onRetry={() => navigate('/analyzer')} />} />
