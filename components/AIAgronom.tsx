@@ -7,6 +7,9 @@ const AIAgronom: React.FC = () => {
   const { sessions, activeSessionId, isLoading } = useChatStore();
   const [input, setInput] = useState('');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editTitle, setEditTitle] = useState('');
+  const [sessionToDelete, setSessionToDelete] = useState<string | null>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   const activeSession = sessions?.find(s => s.id === activeSessionId) || sessions?.[0];
@@ -80,19 +83,82 @@ const AIAgronom: React.FC = () => {
           </div>
           <div className="flex-grow overflow-y-auto p-2 custom-scrollbar">
             {sessions.sort((a,b) => b.updatedAt.getTime() - a.updatedAt.getTime()).map(session => (
-              <button
+              <div
                 key={session.id}
-                onClick={() => {
-                  chatStore.setActiveSessionId(session.id);
-                  setIsSidebarOpen(false);
-                }}
-                className={`w-full text-left px-4 py-3 rounded-xl mb-1 transition-colors ${activeSessionId === session.id ? 'bg-emerald-500 text-white shadow-md shadow-emerald-200' : 'text-slate-600 hover:bg-white/80'}`}
+                className={`group relative w-full text-left rounded-xl mb-1 transition-colors ${activeSessionId === session.id ? 'bg-emerald-500 text-white shadow-md shadow-emerald-200' : 'text-slate-600 hover:bg-white/80'}`}
               >
-                <div className="font-semibold text-sm truncate">{session.title}</div>
-                <div className={`text-[10px] mt-1 line-clamp-1 ${activeSessionId === session.id ? 'text-emerald-100' : 'text-slate-400'}`}>
-                  {session.messages[session.messages.length - 1]?.text || "Bosh chat"}
-                </div>
-              </button>
+                {editingId === session.id ? (
+                  <div className="flex items-center gap-1 p-2">
+                    <input
+                      autoFocus
+                      type="text"
+                      value={editTitle}
+                      onChange={(e) => setEditTitle(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          chatStore.updateSessionTitle(session.id, editTitle);
+                          setEditingId(null);
+                        } else if (e.key === 'Escape') {
+                          setEditingId(null);
+                        }
+                      }}
+                      className="flex-grow w-full bg-white/20 border border-white/40 rounded px-2 py-1 text-sm outline-none placeholder-white/60 focus:ring-1 focus:ring-white"
+                      placeholder="Chat nomi..."
+                    />
+                    <button 
+                      onClick={() => {
+                        chatStore.updateSessionTitle(session.id, editTitle);
+                        setEditingId(null);
+                      }}
+                      className="p-1 rounded text-white bg-white/20 hover:bg-white/40 shrink-0"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    <button
+                      onClick={() => {
+                        chatStore.setActiveSessionId(session.id);
+                        setIsSidebarOpen(false);
+                      }}
+                      className="w-full text-left px-4 py-3 pb-8"
+                    >
+                      <div className="font-semibold text-sm truncate pr-14">{session.title}</div>
+                      <div className={`text-[10px] mt-1 line-clamp-1 absolute bottom-3 w-[calc(100%-2rem)] ${activeSessionId === session.id ? 'text-emerald-100' : 'text-slate-400'}`}>
+                        {session.messages[session.messages.length - 1]?.text || "Bosh chat"}
+                      </div>
+                    </button>
+                    <div className="absolute top-2.5 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity bg-transparent">
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setEditTitle(session.title);
+                          setEditingId(session.id);
+                        }}
+                        className={`p-1 rounded-md transition-colors ${activeSessionId === session.id ? 'text-emerald-100 hover:text-white hover:bg-emerald-600' : 'text-slate-400 hover:text-emerald-500 hover:bg-emerald-50'}`}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                        </svg>
+                      </button>
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSessionToDelete(session.id);
+                        }}
+                        className={`p-1 rounded-md transition-colors ${activeSessionId === session.id ? 'text-emerald-100 hover:text-red-200 hover:bg-red-500/50' : 'text-slate-400 hover:text-red-500 hover:bg-red-50'}`}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
             ))}
           </div>
         </div>
@@ -208,6 +274,44 @@ const AIAgronom: React.FC = () => {
         </div>
 
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {sessionToDelete && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white/80 backdrop-blur-xl border border-white/60 rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.1)] max-w-sm w-full p-6 transform transition-all animate-in zoom-in-95 duration-200">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 rounded-full bg-red-100/80 border border-red-200 flex items-center justify-center shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-slate-800 font-sans">Chatni o'chirish</h3>
+              </div>
+            </div>
+            <p className="text-slate-500 mb-6 text-[15px] leading-relaxed">
+              Ushbu chat xotiradan butunlay o'chib ketadi. Buni haqiqatan ham xohlaysizmi?
+            </p>
+            <div className="flex justify-end gap-3">
+              <button 
+                onClick={() => setSessionToDelete(null)}
+                className="px-5 py-2.5 text-sm font-semibold text-slate-600 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl transition-all shadow-sm"
+              >
+                Bekor qilish
+              </button>
+              <button 
+                onClick={() => {
+                  chatStore.deleteSession(sessionToDelete);
+                  setSessionToDelete(null);
+                }}
+                className="px-5 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 rounded-xl transition-all shadow-md shadow-red-200/50 flex items-center gap-2"
+              >
+                O'chirish
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

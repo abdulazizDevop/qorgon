@@ -109,6 +109,28 @@ class ChatStore {
     this.notify();
   }
 
+  public deleteSession(id: string) {
+    this.sessions = this.sessions.filter(s => s.id !== id);
+    if (this.sessions.length === 0) {
+      this.createNewChat(); // Will notify automatically
+    } else {
+      if (this.activeSessionId === id) {
+        this.activeSessionId = this.sessions[0].id;
+      }
+      this.notify();
+    }
+  }
+
+  public updateSessionTitle(id: string, newTitle: string) {
+    this.sessions = this.sessions.map(s => {
+      if (s.id === id) {
+        return { ...s, title: newTitle, updatedAt: new Date() };
+      }
+      return s;
+    });
+    this.notify();
+  }
+
   public async sendMessage(text: string) {
     if (!text.trim() || !this.activeSessionId) return;
 
