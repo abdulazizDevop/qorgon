@@ -85,13 +85,13 @@ const Landing: React.FC<LandingProps> = ({ onStart }) => {
             </div>
 
             {/* Right Interactive Mockup */}
-            <div className="relative mx-auto max-w-[280px] sm:max-w-[320px] lg:max-w-[380px] perspective-[2000px] z-10 mt-16 lg:mt-0 pb-12 w-full">
+            <div className="relative mx-auto max-w-[280px] sm:max-w-[320px] lg:max-w-[360px] perspective-[2000px] z-10 mt-16 lg:mt-0 pb-0 w-full">
               {/* Decorative Green Aura Behind */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[120%] bg-gradient-to-tr from-emerald-300/30 to-teal-100/30 rounded-[full] blur-3xl -z-10 transform -rotate-12 animate-[pulse_4s_cubic-bezier(0.4,0,0.6,1)_infinite]"></div>
               
               {/* Main Phone Mockup */}
               <div 
-                className="relative bg-slate-900 rounded-[3rem] shadow-2xl shadow-emerald-900/10 border-[6px] border-slate-800 overflow-hidden transform transition-all duration-700 w-full"
+                className="relative bg-slate-900 rounded-t-[3rem] rounded-b-none shadow-2xl shadow-emerald-900/10 border-[6px] border-b-0 border-slate-800 overflow-hidden transform transition-all duration-700 w-full"
                 style={{ transform: `rotateY(-12deg) rotateX(4deg) translateY(${scrollY * -0.05}px)` }}
               >
                 {/* iPhone Dynamic Island / Notch */}
@@ -101,7 +101,7 @@ const Landing: React.FC<LandingProps> = ({ onStart }) => {
                   </div>
                 </div>
                 
-                <div className="relative aspect-[4/5] md:aspect-[9/19.5] bg-slate-900 overflow-hidden rounded-[2.5rem]">
+                <div className="relative aspect-[8/9] sm:aspect-[9/11] lg:aspect-[9/12] bg-slate-900 overflow-hidden rounded-t-[2.5rem] rounded-b-none">
                   <img src="https://images.unsplash.com/photo-1769613637793-1d497f0fedf0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMjA3fDB8MXxzZWFyY2h8Mnx8c2ljayUyMGxlYWZ8ZW58MHx8fHwxNzcyNjA3NDc2fDA&ixlib=rb-4.1.0&q=80&w=1080" alt="Kasallangan barg" className="absolute inset-0 w-full h-full object-cover opacity-80" />
                   
                   {/* Camera Viewfinder Corners */}
@@ -165,7 +165,7 @@ const Landing: React.FC<LandingProps> = ({ onStart }) => {
               
               {/* Floating Element 2 - Hidden on mobile */}
               <div 
-                className="absolute -right-4 md:-right-8 lg:-right-4 bottom-1/4 bg-white/90 backdrop-blur-sm p-3 md:p-4 rounded-xl md:rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 flex items-center gap-2 md:gap-3 z-20 transition-transform hidden sm:flex"
+                className="absolute -right-4 md:-right-8 lg:-right-4 bottom-8 bg-white/90 backdrop-blur-sm p-3 md:p-4 rounded-xl md:rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 flex items-center gap-2 md:gap-3 z-20 transition-transform hidden sm:flex"
                 style={{ transform: `translateY(${scrollY * -0.07}px)` }}
               >
                  <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 font-black shrink-0 text-sm md:text-base">AI</div>
