@@ -1,17 +1,5 @@
+import { LucideShoppingCart, Search, ShoppingCart } from 'lucide-react';
 import React, { useState, useMemo } from 'react';
-
-// Icons using SVG directly for portability
-const SearchIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-    <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-  </svg>
-);
-
-const ShoppingCartIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-  </svg>
-);
 
 const StarIcon = ({ filled = true }: { filled?: boolean }) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill={filled ? "currentColor" : "none"} stroke="currentColor" strokeWidth={1} className={`w-4 h-4 ${filled ? 'text-amber-400' : 'text-slate-300'}`}>
@@ -39,7 +27,7 @@ const MEDICINES: Medicine[] = [
     category: "Kasalliklarga qarshi",
     price: "45 000 so'm",
     priceNumber: 45000,
-    image: "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&q=80&w=500",
+    image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&q=80&w=500", // Cleaning/spraying bottle
     description: "Uzum va olma daraxtlaridagi oidium va parsha kasalliklariga qarshi samarali vosita.",
     usage: "10 litr suvga 5 ml qo'shib purkaladi.",
     rating: 4.8,
@@ -51,7 +39,7 @@ const MEDICINES: Medicine[] = [
     category: "Zararkunandalarga qarshi",
     price: "38 000 so'm",
     priceNumber: 38000,
-    image: "https://images.unsplash.com/photo-1628102491629-778571d893a3?auto=format&fit=crop&q=80&w=500", 
+    image: "https://images.unsplash.com/photo-1621331462282-0c890b7c933b?auto=format&fit=crop&q=80&w=500", // Man spraying field
     description: "Shira, trips va boshqa so'ruvchi zararkunandalarni tezda yo'q qiladi.",
     usage: "Hektariga 0.2 litr me'yorida qo'llaniladi.",
     rating: 4.5
@@ -62,7 +50,7 @@ const MEDICINES: Medicine[] = [
     category: "Begona o'tlarga qarshi",
     price: "95 000 so'm",
     priceNumber: 95000,
-    image: "https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&q=80&w=500",
+    image: "https://images.unsplash.com/photo-1692175016147-180aa22d3cd8?auto=format&fit=crop&q=80&w=500", // Tractor spraying field
     description: "Barcha turdagi begona o'tlarni ildizi bilan qurituvchi kuchli vosita.",
     usage: "O'simliklar o'suv davrida qo'llaniladi.",
     rating: 4.9,
@@ -74,7 +62,7 @@ const MEDICINES: Medicine[] = [
     category: "O'g'itlar",
     price: "25 000 so'm",
     priceNumber: 25000,
-    image: "https://images.unsplash.com/photo-1601646271960-e836ec43a85b?auto=format&fit=crop&q=80&w=500",
+    image: "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&q=80&w=500", // Green crop close up liquid drops
     description: "O'simliklarning o'sishini tezlashtiradi va immunitetini oshiradi.",
     usage: "Har 10 kunda bir marta bargdan oziqlantiriladi.",
     rating: 4.7
@@ -85,7 +73,7 @@ const MEDICINES: Medicine[] = [
     category: "Kasalliklarga qarshi",
     price: "15 000 so'm",
     priceNumber: 15000,
-    image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=500",
+    image: "https://images.unsplash.com/photo-1611329532986-e8eb4ab9d77e?auto=format&fit=crop&q=80&w=500", // Blue powder chemistry
     description: "Zamburug'li kasalliklarning oldini olish uchun klassik vosita.",
     usage: "Kuzda va erta bahorda daraxtlarga ishlov berish uchun.",
     rating: 4.6,
@@ -97,7 +85,7 @@ const MEDICINES: Medicine[] = [
     category: "O'g'itlar",
     price: "8 000 so'm/kg",
     priceNumber: 8000,
-    image: "https://images.unsplash.com/photo-1588623676100-24e031976008?auto=format&fit=crop&q=80&w=500",
+    image: "https://plus.unsplash.com/premium_photo-1681426687411-21986b0626a8?auto=format&fit=crop&q=80&w=500", // Soil / Granules hands
     description: "Azot, fosfor va kaliyli kompleks o'g'it. Barcha ekinlar uchun.",
     usage: "Ekishdan oldin tuproqqa solinadi.",
     rating: 4.8
@@ -136,37 +124,48 @@ const AgroPharmacy: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-50 font-sans pb-24">
       {/* Hero Section */}
-      <div className="relative bg-teal-900 overflow-hidden pt-20 pb-28 mb-12">
+      <div className="relative bg-teal-900 overflow-hidden pt-12 pb-14 mb-10 rounded-b-[3rem] shadow-sm">
         {/* Abstract Background Shapes */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
-          <div className="absolute -top-[20%] -right-[10%] w-[50%] h-[100%] rounded-full bg-emerald-500/20 blur-[120px]" />
-          <div className="absolute top-[40%] -left-[10%] w-[40%] h-[80%] rounded-full bg-teal-400/20 blur-[100px]" />
+          <div className="absolute top-0 right-0 w-[40rem] h-[40rem] rounded-full bg-emerald-500/20 blur-[100px] translate-x-1/3 -translate-y-1/3" />
+          <div className="absolute bottom-0 left-0 w-[30rem] h-[30rem] rounded-full bg-teal-400/20 blur-[80px] -translate-x-1/4 translate-y-1/3" />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-emerald-300 text-sm font-bold mb-6 tracking-wide shadow-2xl">
-            <ShoppingCartIcon />
-            100+ Sertifikatlangan Dori Vositalari
-          </div>
-          <h1 className="text-5xl md:text-6xl font-black text-white mb-6 font-serif drop-shadow-xl tracking-tight">
-            Agro <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">Dorixona</span>
-          </h1>
-          <p className="text-teal-100/90 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-light leading-relaxed">
-            Ekinlaringiz uchun mutaxassislar tomonidan sinovdan o'tgan, eng ishonchli o'g'it va himoya vositalari.
-          </p>
-
-          {/* Search Bar */}
-          <div className="relative max-w-xl mx-auto group">
-            <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-emerald-500 transition-colors">
-              <SearchIcon />
+        <div className="relative z-10 max-w-7xl mx-auto px-6">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-10">
+            
+            {/* Left Content */}
+            <div className="lg:w-1/2 text-center lg:text-left">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-emerald-300 text-sm font-bold mb-6 tracking-wide shadow-lg mx-auto lg:mx-0">
+                <LucideShoppingCart />
+                100+ Sertifikatlangan Dori Vositalari
+              </div>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 font-serif drop-shadow-xl tracking-tight leading-tight">
+                Agro <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">Dorixona</span>
+              </h1>
+              <p className="text-teal-100/90 text-lg max-w-lg mx-auto lg:mx-0 font-light leading-relaxed">
+                Ekinlaringiz uchun mutaxassislar tomonidan sinovdan o'tgan, eng ishonchli o'g'it va himoya vositalari markazi.
+              </p>
             </div>
-            <input 
-              type="text" 
-              placeholder="Dori nomi yoki kasallikni qidiring..." 
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-6 py-4 rounded-2xl bg-white/95 backdrop-blur-xl border border-white/40 shadow-2xl text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-emerald-500/30 transition-all font-medium text-lg"
-            />
+
+            {/* Right Search Bar */}
+            <div className="lg:w-1/2 w-full max-w-xl">
+               <div className="bg-white/10 backdrop-blur-md p-2 rounded-3xl border border-white/20 shadow-2xl relative">
+                 <div className="absolute inset-y-0 left-6 flex items-center pointer-events-none text-white/50">
+                    <Search color='black' />
+                 </div>
+                 <input 
+                    type="text" 
+                    placeholder="Dori nomi yoki kasallik..." 
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-14 pr-6 py-5 rounded-2xl bg-white/95 text-slate-800 placeholder:text-slate-500 focus:outline-none focus:ring-4 focus:ring-emerald-500/50 shadow-inner font-medium text-lg transition-all"
+                 />
+                 {/* Decorative elements around search */}
+               </div>
+               <p className="text-teal-200/60 text-sm mt-4 text-center lg:text-right font-medium pr-2">Tezkor qidiruv, doimiy natija!</p>
+            </div>
+            
           </div>
         </div>
       </div>
@@ -214,7 +213,7 @@ const AgroPharmacy: React.FC = () => {
                     />
                   ) : (
                     <div className="flex flex-col items-center justify-center h-full text-slate-300 group-hover:scale-110 transition-transform duration-700">
-                      <ShoppingCartIcon />
+                      <LucideShoppingCart />
                       <span className="text-xs font-bold uppercase tracking-wider mt-2">Rasm yo'q</span>
                     </div>
                   )}
@@ -283,7 +282,7 @@ const AgroPharmacy: React.FC = () => {
                       title="Savatga qo'shish"
                     >
                       <div className={`transition-transform duration-300 ${addedItems.includes(medicine.id) ? 'scale-0' : 'scale-100'}`}>
-                        <ShoppingCartIcon />
+                        <LucideShoppingCart />
                       </div>
                       <div className={`absolute inset-0 flex items-center justify-center transition-transform duration-300 ${addedItems.includes(medicine.id) ? 'scale-100' : 'scale-0'}`}>
                         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
@@ -299,7 +298,7 @@ const AgroPharmacy: React.FC = () => {
         ) : (
           <div className="text-center py-20">
             <div className="w-24 h-24 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6 text-slate-300">
-               <SearchIcon />
+               <Search color='black' />
             </div>
             <h3 className="text-2xl font-black text-slate-800 mb-2 font-serif">Hech narsa topilmadi</h3>
             <p className="text-slate-500">Kiritilgan qidiruv bo'yicha dori vositalari topilmadi. Boshqa so'z bilan izlab ko'ring.</p>
