@@ -2,21 +2,24 @@
 import React, { useState } from 'react';
 
 const PLANT_DB = [
-  { name: 'Gʻoʻza (Cotton)', img: '', diseases: ['Vilt', 'Shira', 'Bakterial kuyish'], risk: 'High', origin: 'Oltin vodiy' },
-  { name: 'Bugʻdoy (Wheat)', img: '', diseases: ['Sariq zang', 'Qora don', 'Septorioz'], risk: 'Medium', origin: 'Sirdaryo' },
-  { name: 'Pomidor (Tomato)', img: '', diseases: ['Fitofthora', 'Mozaika', 'Fuzarioz'], risk: 'High', origin: 'Toshkent' },
-  { name: 'Uzum (Husayni)', img: '', diseases: ['Oidium', 'Mildyu', 'Kul'], risk: 'Medium', origin: 'Parkent' },
-  { name: 'Anor (Pomegranate)', img: '', diseases: ['Don chirishi', 'Meva biti', 'Barg toʻkilishi'], risk: 'Low', origin: 'Quva' },
-  { name: 'Anjir (Fig)', img: '', diseases: ['Barg zangi', 'Anjir shirasi'], risk: 'Low', origin: 'Xiva' },
-  { name: 'Shaftoli (Peach)', img: '', diseases: ['Barg bujmayishi', 'Moniolioz'], risk: 'Medium', origin: 'Fargʻona' },
-  { name: 'Qovun (Melon)', img: '', diseases: ['Oq chirish', 'Pashsha tushishi'], risk: 'High', origin: 'Mirzachoʻl' },
-  { name: 'Tut (Mulberry)', img: '', diseases: ['Ipak qurti kasalliklari', 'Meva chirishi'], risk: 'Low', origin: 'Buxoro' },
-  { name: 'Kartoshka (Potato)', img: '', diseases: ['Fitoftora', 'Alternarioz', 'Kolorado qoʻngʻizi'], risk: 'High', origin: 'Zomin' },
-  { name: 'Bodring (Cucumber)', img: '', diseases: ['Sariq kasalligi', 'Kukundor shira'], risk: 'Medium', origin: 'Qibray' },
-  { name: 'Gilos (Cherry)', img: '', diseases: ['Kokkomikoz', 'Teshikli dogʻlanish'], risk: 'Medium', origin: 'Namangan' },
-  { name: 'Oʻrik (Apricot)', img: '', diseases: ['Klyasterosporioz', 'Sogʻon chirishi'], risk: 'Medium', origin: 'Samarqand' },
-  { name: 'Yongʻoq (Walnut)', img: '', diseases: ['Bakterioz', 'Antraknoz'], risk: 'Low', origin: 'Bostoniq' },
-  { name: 'Limon (Lemon)', img: '', diseases: ['Gommoz', 'Meva tushishi'], risk: 'Medium', origin: 'Toshkent' }
+  { name: 'Gʻoʻza (Paxta)', category: 'Texnik', img: 'https://images.unsplash.com/photo-1582214691490-53bc1bfde2f4?auto=format&fit=crop&w=600&q=80', diseases: ['Vilt', 'Shira', 'Bakterial kuyish', 'Kuzgi tunlam'], risk: 'High', origin: 'Fargʻona' },
+  { name: 'Bugʻdoy', category: 'Don', img: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=600&q=80', diseases: ['Sariq zang', 'Qora don', 'Septorioz'], risk: 'Medium', origin: 'Sirdaryo' },
+  { name: 'Pomidor', category: 'Sabzavot', img: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=600&q=80', diseases: ['Fitoftoroz', 'Mozaika', 'Fuzarioz', 'Zang'], risk: 'High', origin: 'Toshkent' },
+  { name: 'Uzum', category: 'Meva', img: 'https://images.unsplash.com/photo-1596362438670-381dc35ff1eb?auto=format&fit=crop&w=600&q=80', diseases: ['Oidium', 'Mildyu', 'Kul', 'Antraknoz'], risk: 'Medium', origin: 'Parkent' },
+  { name: 'Anor', category: 'Meva', img: 'https://images.unsplash.com/photo-1615485437887-4d6d6daece60?auto=format&fit=crop&w=600&q=80', diseases: ['Don chirishi', 'Meva biti', 'Barg toʻkilishi'], risk: 'Low', origin: 'Quva' },
+  { name: 'Anjir', category: 'Meva', img: 'https://images.unsplash.com/photo-1620023023078-4ea8c2794cc5?auto=format&fit=crop&w=600&q=80', diseases: ['Barg zangi', 'Anjir shirasi'], risk: 'Low', origin: 'Xiva' },
+  { name: 'Shaftoli', category: 'Meva', img: 'https://images.unsplash.com/photo-1528821128474-27f9ee07974e?auto=format&fit=crop&w=600&q=80', diseases: ['Barg bujmayishi', 'Moniolioz', 'Zang'], risk: 'High', origin: 'Fargʻona' },
+  { name: 'Qovun', category: 'Poliz', img: 'https://images.unsplash.com/photo-1587049352847-81a56d773c1c?auto=format&fit=crop&w=600&q=80', diseases: ['Oq chirish', 'Qovun pashshasi', 'Ildiz chirishi'], risk: 'High', origin: 'Mirzachoʻl' },
+  { name: 'Karam', category: 'Sabzavot', img: 'https://images.unsplash.com/photo-1557844352-761f2565b576?auto=format&fit=crop&w=600&q=80', diseases: ['Qora oyoq', 'Oila kuyishi', 'Karam biti'], risk: 'Medium', origin: 'Zangiota' },
+  { name: 'Kartoshka', category: 'Sabzavot', img: 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=600&q=80', diseases: ['Fitoftora', 'Alternarioz', 'Kolorado qoʻngʻizi', 'Makrosporioz'], risk: 'High', origin: 'Zomin' },
+  { name: 'Bodring', category: 'Sabzavot', img: 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=600&q=80', diseases: ['Soxta un shudring', 'Kukundor shira'], risk: 'High', origin: 'Qibray' },
+  { name: 'Gilos', category: 'Meva', img: 'https://images.unsplash.com/photo-1559181567-c3190ca9959b?auto=format&fit=crop&w=600&q=80', diseases: ['Kokkomikoz', 'Teshikli dogʻlanish', 'Gilos pashshasi'], risk: 'Medium', origin: 'Namangan' },
+  { name: 'Oʻrik', category: 'Meva', img: 'https://images.unsplash.com/photo-1629828552108-a00d8beeb9ce?auto=format&fit=crop&w=600&q=80', diseases: ['Klyasterosporioz', 'Monilioz chirish'], risk: 'Medium', origin: 'Samarqand' },
+  { name: 'Yongʻoq', category: 'Meva', img: 'https://images.unsplash.com/photo-1596700542368-8e68db35b128?auto=format&fit=crop&w=600&q=80', diseases: ['Bakterioz', 'Antraknoz', 'Yongʻoq kuyasi'], risk: 'Low', origin: 'Boʻstonliq' },
+  { name: 'Limon', category: 'Meva', img: 'https://images.unsplash.com/photo-1582294432170-13f5728a47fd?auto=format&fit=crop&w=600&q=80', diseases: ['Gommoz', 'Meva toʻkilishi', 'Sitrus trips'], risk: 'Medium', origin: 'Toshkent' },
+  { name: 'Tarvuz', category: 'Poliz', img: 'https://images.unsplash.com/photo-1589984662646-e7b2e4962f18?auto=format&fit=crop&w=600&q=80', diseases: ['Antraknoz', 'Fuzarioz soʻlish', 'Shira'], risk: 'Medium', origin: 'Qashqadaryo' },
+  { name: 'Makkajoʻxori', category: 'Don', img: 'https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=600&q=80', diseases: ['Qorakuya', 'Poya chirishi'], risk: 'Low', origin: 'Andijon' },
+  { name: 'Piyoz', category: 'Sabzavot', img: 'https://images.unsplash.com/photo-1620574387735-3624d75b2dbc?auto=format&fit=crop&w=600&q=80', diseases: ['Aka chirish', 'Peronosporoz', 'Piyoz pashshasi'], risk: 'Medium', origin: 'Surxondaryo' }
 ];
 
 const Database: React.FC = () => {
@@ -25,7 +28,7 @@ const Database: React.FC = () => {
 
   const filtered = PLANT_DB.filter(p => 
     p.name.toLowerCase().includes(filter.toLowerCase()) && 
-    (activeTab === 'Barchasi' || (activeTab === 'Xavfli' && p.risk === 'High') || (activeTab === 'Meva' && !['Gʻoʻza', 'Bugʻdoy', 'Kartoshka'].some(x => p.name.includes(x))))
+    (activeTab === 'Barchasi' || (activeTab === 'Xavfli' && p.risk === 'High') || activeTab === p.category)
   );
 
   return (
@@ -49,8 +52,8 @@ const Database: React.FC = () => {
         </div>
       </div>
 
-      <div className="flex gap-4 mb-12 overflow-x-auto pb-4 no-scrollbar">
-         {['Barchasi', 'Meva', 'Xavfli', 'Sabzavot'].map(tab => (
+      <div className="flex gap-4 mb-12 overflow-x-auto pb-4 custom-scrollbar">
+         {['Barchasi', 'Meva', 'Sabzavot', 'Poliz', 'Texnik', 'Don', 'Xavfli'].map(tab => (
            <button 
             key={tab}
             onClick={() => setActiveTab(tab)}
