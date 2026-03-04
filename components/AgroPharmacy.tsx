@@ -1,4 +1,4 @@
-import { LucideShoppingCart, Search, ShoppingCart } from 'lucide-react';
+import { ShoppingCart, Search, CheckCircle2, PackageOpen, LucideShoppingCart } from 'lucide-react';
 import React, { useState, useMemo } from 'react';
 
 const StarIcon = ({ filled = true }: { filled?: boolean }) => (
@@ -200,94 +200,91 @@ const AgroPharmacy: React.FC = () => {
             {filteredMedicines.map(medicine => (
               <div 
                 key={medicine.id} 
-                className="group flex flex-col bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-2xl hover:border-emerald-200 transition-all duration-500 hover:-translate-y-1"
+                className="group flex flex-col bg-white rounded-[2.5rem] p-4 border border-slate-100 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05)] hover:shadow-2xl hover:shadow-emerald-100/60 hover:border-emerald-100 transition-all duration-500 hover:-translate-y-2 h-full justify-between relative"
               >
-                {/* Image Container */}
-                <div className="relative h-56 bg-slate-50 overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent z-10"></div>
+                {/* Image Area */}
+                <div className="relative h-56 bg-gradient-to-br from-slate-50 to-emerald-50/20 rounded-[2rem] overflow-hidden mb-6 flex items-center justify-center border border-slate-50">
                   {medicine.image ? (
                     <img 
                       src={medicine.image} 
                       alt={medicine.name} 
-                      className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-in-out"
+                      className="w-[85%] h-[85%] object-contain transform group-hover:scale-110 group-hover:rotate-3 transition-transform duration-700 ease-out drop-shadow-2xl"
                     />
                   ) : (
-                    <div className="flex flex-col items-center justify-center h-full text-slate-300 group-hover:scale-110 transition-transform duration-700">
-                      <LucideShoppingCart />
-                      <span className="text-xs font-bold uppercase tracking-wider mt-2">Rasm yo'q</span>
+                    <div className="flex flex-col items-center justify-center text-slate-300">
+                      <PackageOpen className="w-12 h-12 mb-2 group-hover:text-emerald-300 transition-colors" />
+                      <span className="text-[10px] font-black uppercase tracking-widest">Surat Yo'q</span>
                     </div>
                   )}
                   
-                  {/* Badges */}
-                  <div className="absolute top-4 left-4 z-20 flex flex-col gap-2">
+                  {/* Badges Overlay */}
+                  <div className="absolute top-4 left-4 z-10 flex flex-col gap-2">
                     {medicine.badge && (
-                      <span className="bg-gradient-to-r from-amber-400 to-orange-500 text-white px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider shadow-lg">
+                      <span className="bg-white/90 backdrop-blur-md text-amber-600 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider shadow-sm border border-amber-100/50">
                         {medicine.badge}
                       </span>
                     )}
                   </div>
-                  <div className="absolute top-4 right-4 z-20">
-                    <span className="bg-white/90 backdrop-blur-md text-teal-800 px-3 py-1.5 rounded-xl text-xs font-black shadow-lg">
-                      {medicine.category}
+                  <div className="absolute top-4 right-4 z-10">
+                    <span className="bg-emerald-50 text-emerald-600 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider border border-emerald-100/50 shadow-sm">
+                      {medicine.category.split(' ')[0]} {/* Shorter category name for badge */}
                     </span>
                   </div>
                 </div>
                 
-                {/* Content */}
-                <div className="p-6 flex-grow flex flex-col">
-                  {/* Rating */}
-                  <div className="flex items-center gap-1 mb-3">
+                {/* Content Area */}
+                <div className="px-2 flex flex-col flex-grow">
+                  <div className="flex items-center justify-between mb-4">
                     <div className="flex">
                        {[1,2,3,4,5].map(star => (
                          <StarIcon key={star} filled={star <= Math.round(medicine.rating)} />
                        ))}
                     </div>
-                    <span className="text-xs font-bold text-slate-400 ml-1">{medicine.rating}</span>
+                    <span className="text-[11px] font-black bg-slate-100 text-slate-500 px-2 py-0.5 rounded-md">{medicine.rating} / 5</span>
                   </div>
 
-                  <h3 className="text-xl font-black text-slate-900 mb-2 font-serif group-hover:text-emerald-700 transition-colors line-clamp-1" title={medicine.name}>
+                  <h3 className="text-2xl font-black text-slate-900 mb-3 font-serif line-clamp-2 leading-tight group-hover:text-emerald-700 transition-colors" title={medicine.name}>
                     {medicine.name}
                   </h3>
                   
-                  <p className="text-slate-500 text-sm mb-4 line-clamp-2 leading-relaxed flex-grow">
+                  <p className="text-slate-500 text-sm mb-6 line-clamp-2 leading-relaxed font-medium">
                     {medicine.description}
                   </p>
                   
-                  <div className="bg-slate-50/80 rounded-2xl p-4 mb-6 border border-slate-100 group-hover:bg-emerald-50/50 transition-colors">
-                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider mb-1">
-                      Qo'llash usuli:
+                  {/* Usage / Usage Instructions Box */}
+                  <div className="bg-slate-50 rounded-2xl p-4 mb-6 border border-slate-100 group-hover:bg-emerald-50/50 group-hover:border-emerald-100/50 transition-colors flex-grow">
+                    <p className="text-[10px] font-black text-emerald-600/70 uppercase tracking-widest mb-1.5 flex items-center gap-1">
+                      <CheckCircle2 className="w-3 h-3" /> Qo'llash
                     </p>
-                    <p className="text-slate-700 text-sm font-medium leading-snug line-clamp-2">
+                    <p className="text-slate-700 text-[13px] font-bold leading-snug">
                       {medicine.usage}
                     </p>
                   </div>
 
-                  {/* Price & Action */}
-                  <div className="mt-auto flex items-center justify-between gap-4 pt-2 border-t border-slate-100">
+                  {/* Price & Cart Actions */}
+                  <div className="flex items-center justify-between pt-2">
                     <div>
-                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">Narxi:</p>
-                      <span className="text-xl font-black text-teal-900 tracking-tight">
-                        {medicine.price}
+                      <span className="text-2xl font-black text-slate-900 tracking-tight font-serif drop-shadow-sm">
+                        {medicine.price.split(' ')[0]}
                       </span>
+                      <span className="text-xs font-bold text-slate-400 ml-1 uppercase">{medicine.price.split(' ').slice(1).join(' ')}</span>
                     </div>
 
                     <button 
                       onClick={() => handleAddToCart(medicine.id)}
                       disabled={addedItems.includes(medicine.id)}
-                      className={`relative overflow-hidden w-12 h-12 flex items-center justify-center rounded-2xl transition-all duration-300 shadow-lg ${
+                      className={`relative overflow-hidden w-14 h-14 flex items-center justify-center rounded-[1.25rem] transition-all duration-300 shadow-md ${
                         addedItems.includes(medicine.id)
-                          ? 'bg-teal-500 text-white scale-95 shadow-teal-500/20'
+                          ? 'bg-emerald-500 text-white scale-95 shadow-none'
                           : 'bg-slate-900 text-white hover:bg-emerald-600 hover:-translate-y-1 hover:shadow-emerald-600/30'
                       }`}
                       title="Savatga qo'shish"
                     >
-                      <div className={`transition-transform duration-300 ${addedItems.includes(medicine.id) ? 'scale-0' : 'scale-100'}`}>
-                        <LucideShoppingCart />
+                      <div className={`transition-transform duration-300 absolute ${addedItems.includes(medicine.id) ? 'scale-0 blur-sm' : 'scale-100 blur-0'}`}>
+                        <ShoppingCart className="w-5 h-5" />
                       </div>
-                      <div className={`absolute inset-0 flex items-center justify-center transition-transform duration-300 ${addedItems.includes(medicine.id) ? 'scale-100' : 'scale-0'}`}>
-                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                        </svg>
+                      <div className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${addedItems.includes(medicine.id) ? 'scale-100 opacity-100' : 'scale-50 opacity-0'}`}>
+                        <CheckCircle2 className="w-6 h-6" />
                       </div>
                     </button>
                   </div>
