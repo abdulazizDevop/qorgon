@@ -85,41 +85,64 @@ const Landing: React.FC<LandingProps> = ({ onStart }) => {
             </div>
 
             {/* Right Interactive Mockup */}
-            <div className="relative mx-auto max-w-[300px] sm:max-w-[340px] lg:max-w-[380px] xl:max-w-[420px] perspective-[2000px] z-10 mt-16 lg:mt-0 pb-12 lg:ml-auto lg:mr-8">
+            <div className="relative mx-auto max-w-[280px] sm:max-w-[320px] lg:max-w-[380px] perspective-[2000px] z-10 mt-16 lg:mt-0 pb-12 w-full">
               {/* Decorative Green Aura Behind */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[120%] bg-gradient-to-tr from-emerald-300/30 to-teal-100/30 rounded-[full] blur-3xl -z-10 transform -rotate-12 animate-pulse"></div>
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[120%] bg-gradient-to-tr from-emerald-300/30 to-teal-100/30 rounded-[full] blur-3xl -z-10 transform -rotate-12 animate-[pulse_4s_cubic-bezier(0.4,0,0.6,1)_infinite]"></div>
               
               {/* Main Phone Mockup */}
               <div 
-                className="relative bg-white rounded-[2.5rem] md:rounded-[3rem] shadow-2xl shadow-emerald-900/10 border-[8px] border-slate-50 overflow-hidden transform transition-all duration-700 w-full"
+                className="relative bg-slate-900 rounded-[3rem] shadow-2xl shadow-emerald-900/10 border-[6px] border-slate-800 overflow-hidden transform transition-all duration-700 w-full"
                 style={{ transform: `rotateY(-12deg) rotateX(4deg) translateY(${scrollY * -0.05}px)` }}
               >
-                <div className="absolute top-0 inset-x-0 h-6 bg-slate-50 flex justify-center z-20">
-                  <div className="w-16 md:w-20 h-4 bg-slate-200 rounded-b-xl my-1"></div>
+                {/* iPhone Dynamic Island / Notch */}
+                <div className="absolute top-0 inset-x-0 h-7 flex justify-center z-40 pointer-events-none">
+                  <div className="w-[120px] h-6 bg-black rounded-b-3xl relative">
+                    <div className="absolute top-2 right-4 w-1.5 h-1.5 rounded-full bg-emerald-500 opacity-80"></div>
+                  </div>
                 </div>
                 
-                <div className="relative aspect-[4/5] md:aspect-[5/6] bg-slate-900 overflow-hidden">
-                  <img src="https://images.unsplash.com/photo-1615814040925-1eabdd11b2af?auto=format&fit=crop&w=800&q=80" alt="Kasallangan barg" className="absolute inset-0 w-full h-full object-cover opacity-60" />
+                <div className="relative aspect-[4/5] md:aspect-[9/19.5] bg-slate-900 overflow-hidden rounded-[2.5rem]">
+                  <img src="https://images.unsplash.com/photo-1769613637793-1d497f0fedf0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMjA3fDB8MXxzZWFyY2h8Mnx8c2ljayUyMGxlYWZ8ZW58MHx8fHwxNzcyNjA3NDc2fDA&ixlib=rb-4.1.0&q=80&w=1080" alt="Kasallangan barg" className="absolute inset-0 w-full h-full object-cover opacity-80" />
                   
+                  {/* Camera Viewfinder Corners */}
+                  <div className="absolute inset-6 md:inset-8 z-10 flex flex-col justify-between pointer-events-none">
+                     <div className="flex justify-between">
+                       <div className="w-8 h-8 md:w-12 md:h-12 border-t-4 border-l-4 border-white/80 rounded-tl-2xl"></div>
+                       <div className="w-8 h-8 md:w-12 md:h-12 border-t-4 border-r-4 border-white/80 rounded-tr-2xl"></div>
+                     </div>
+                     <div className="flex justify-between pb-24 md:pb-28">
+                       <div className="w-8 h-8 md:w-12 md:h-12 border-b-4 border-l-4 border-white/80 rounded-bl-2xl"></div>
+                       <div className="w-8 h-8 md:w-12 md:h-12 border-b-4 border-r-4 border-white/80 rounded-br-2xl"></div>
+                     </div>
+                  </div>
+
+                  {/* Top Camera Header Status overlay */}
+                  <div className="absolute top-6 inset-x-0 w-full flex justify-center z-20">
+                    <span className="bg-slate-900/70 backdrop-blur-md text-white text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider flex items-center gap-2 shadow-lg">
+                       <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                       SKANER ISHLAMOQDA
+                    </span>
+                  </div>
+
                   {/* Scanning Animation */}
-                  <div className="absolute inset-x-0 top-0 h-[20%] w-full bg-gradient-to-b from-emerald-400/0 via-emerald-400/30 to-emerald-400/0" style={{ animation: 'scan 2.5s ease-in-out infinite' }}>
-                     <div className="absolute bottom-0 w-full h-[2px] shadow-[0_0_10px_2px_#34d399] bg-emerald-400"></div>
+                  <div className="absolute inset-x-0 top-0 h-[30%] w-full bg-gradient-to-b from-emerald-400/0 via-emerald-400/20 to-emerald-400/0 z-20 pointer-events-none" style={{ animation: 'scan 4s ease-in-out infinite' }}>
+                     <div className="absolute bottom-0 w-full h-[2px] shadow-[0_0_15px_3px_#34d399] bg-emerald-400"></div>
                   </div>
 
                   {/* UI Overlay */}
-                  <div className="absolute bottom-0 inset-x-0 px-4 pb-6 md:px-6 bg-gradient-to-t from-slate-900 via-slate-900/90 to-transparent">
-                     <div className="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-2xl transform translate-y-2 opacity-0 shadow-lg" style={{ animation: 'fade-in-up 0.5s ease-out 1s forwards' }}>
+                  <div className="absolute bottom-0 inset-x-0 px-4 pb-6 md:px-6 bg-gradient-to-t from-slate-900 via-slate-900/90 to-transparent z-30">
+                     <div className="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-2xl transform translate-y-2 opacity-0 shadow-[0_8px_32px_rgba(0,0,0,0.3)]" style={{ animation: 'fade-in-up 0.5s ease-out 1.2s forwards' }}>
                        <div className="flex items-center gap-3 md:gap-4 mb-3">
                          <div className="bg-red-500/20 p-2 md:p-2.5 rounded-xl shrink-0">
                            <svg className="w-5 h-5 md:w-6 md:h-6 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
                          </div>
                          <div>
-                            <p className="text-white font-bold font-serif text-base md:text-lg">Uzum Oidiumi</p>
-                            <p className="text-emerald-300 text-[10px] md:text-xs font-bold uppercase tracking-wider">98% Aniqlikda topildi</p>
+                            <p className="text-white font-bold font-serif text-base md:text-lg drop-shadow-md">Uzum Oidiumi</p>
+                            <p className="text-emerald-300 text-[10px] md:text-xs font-bold uppercase tracking-wider drop-shadow-md">98% Aniqlikda topildi</p>
                          </div>
                        </div>
-                       <div className="w-full bg-slate-700/50 rounded-full h-1.5 md:h-2 mt-2">
-                         <div className="bg-gradient-to-r from-red-500 to-rose-400 h-1.5 md:h-2 rounded-full w-[85%] shadow-[0_0_8px_rgba(239,68,68,0.5)]"></div>
+                       <div className="w-full bg-slate-700/50 rounded-full h-1.5 md:h-2 mt-2 border border-slate-600/50">
+                         <div className="bg-gradient-to-r from-red-500 to-rose-400 h-1.5 md:h-2 rounded-full w-[85%] shadow-[0_0_12px_rgba(239,68,68,0.8)]"></div>
                        </div>
                      </div>
                   </div>
@@ -142,8 +165,8 @@ const Landing: React.FC<LandingProps> = ({ onStart }) => {
               
               {/* Floating Element 2 - Hidden on mobile */}
               <div 
-                className="absolute -right-8 md:-right-16 bottom-1/4 bg-white/90 backdrop-blur-sm p-3 md:p-4 rounded-xl md:rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 flex items-center gap-2 md:gap-3 z-20 transition-transform hidden sm:flex"
-                style={{ transform: `translateY(${scrollY * -0.07}px) translateZ(30px)` }}
+                className="absolute -right-4 md:-right-8 lg:-right-4 bottom-1/4 bg-white/90 backdrop-blur-sm p-3 md:p-4 rounded-xl md:rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 flex items-center gap-2 md:gap-3 z-20 transition-transform hidden sm:flex"
+                style={{ transform: `translateY(${scrollY * -0.07}px)` }}
               >
                  <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 font-black shrink-0 text-sm md:text-base">AI</div>
                  <div>
