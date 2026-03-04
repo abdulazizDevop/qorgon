@@ -27,7 +27,7 @@ const MEDICINES: Medicine[] = [
     category: "Kasalliklarga qarshi",
     price: "45 000 so'm",
     priceNumber: 45000,
-    image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&q=80&w=500", // Cleaning/spraying bottle
+    image: "/images/topaz.png",
     description: "Uzum va olma daraxtlaridagi oidium va parsha kasalliklariga qarshi samarali vosita.",
     usage: "10 litr suvga 5 ml qo'shib purkaladi.",
     rating: 4.8,
@@ -39,7 +39,7 @@ const MEDICINES: Medicine[] = [
     category: "Zararkunandalarga qarshi",
     price: "38 000 so'm",
     priceNumber: 38000,
-    image: "https://images.unsplash.com/photo-1621331462282-0c890b7c933b?auto=format&fit=crop&q=80&w=500", // Man spraying field
+    image: "/images/karate.png",
     description: "Shira, trips va boshqa so'ruvchi zararkunandalarni tezda yo'q qiladi.",
     usage: "Hektariga 0.2 litr me'yorida qo'llaniladi.",
     rating: 4.5
@@ -50,7 +50,7 @@ const MEDICINES: Medicine[] = [
     category: "Begona o'tlarga qarshi",
     price: "95 000 so'm",
     priceNumber: 95000,
-    image: "https://images.unsplash.com/photo-1692175016147-180aa22d3cd8?auto=format&fit=crop&q=80&w=500", // Tractor spraying field
+    image: "/images/uragan.png",
     description: "Barcha turdagi begona o'tlarni ildizi bilan qurituvchi kuchli vosita.",
     usage: "O'simliklar o'suv davrida qo'llaniladi.",
     rating: 4.9,
@@ -62,7 +62,7 @@ const MEDICINES: Medicine[] = [
     category: "O'g'itlar",
     price: "25 000 so'm",
     priceNumber: 25000,
-    image: "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&q=80&w=500", // Green crop close up liquid drops
+    image: "/images/gummat.png",
     description: "O'simliklarning o'sishini tezlashtiradi va immunitetini oshiradi.",
     usage: "Har 10 kunda bir marta bargdan oziqlantiriladi.",
     rating: 4.7
@@ -73,7 +73,7 @@ const MEDICINES: Medicine[] = [
     category: "Kasalliklarga qarshi",
     price: "15 000 so'm",
     priceNumber: 15000,
-    image: "https://images.unsplash.com/photo-1611329532986-e8eb4ab9d77e?auto=format&fit=crop&q=80&w=500", // Blue powder chemistry
+    image: "/images/miskuporosi.png",
     description: "Zamburug'li kasalliklarning oldini olish uchun klassik vosita.",
     usage: "Kuzda va erta bahorda daraxtlarga ishlov berish uchun.",
     rating: 4.6,
@@ -85,7 +85,7 @@ const MEDICINES: Medicine[] = [
     category: "O'g'itlar",
     price: "8 000 so'm/kg",
     priceNumber: 8000,
-    image: "https://plus.unsplash.com/premium_photo-1681426687411-21986b0626a8?auto=format&fit=crop&q=80&w=500", // Soil / Granules hands
+    image: "/images/nitroammofoska.png",
     description: "Azot, fosfor va kaliyli kompleks o'g'it. Barcha ekinlar uchun.",
     usage: "Ekishdan oldin tuproqqa solinadi.",
     rating: 4.8
