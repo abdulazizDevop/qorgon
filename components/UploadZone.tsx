@@ -8,9 +8,9 @@ interface UploadZoneProps {
 
 const SAMPLE_IMAGES = [
   {
-    label: "Pomidor — fitoftoroz",
-    url: "/demo-samples/tomato-blight.jpg",
-    hint: "Qora dog'lar, barg qurishi",
+    label: "Kartoshka — fitoftoroz",
+    url: "/demo-samples/potato-blight.jpg",
+    hint: "Qo'ng'ir dog'lar, barg qurishi",
   },
   {
     label: "Uzum — oidium",

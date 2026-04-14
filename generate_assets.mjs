@@ -1,6 +1,5 @@
-// Generate founder portrait and favicon via Gemini image generation
-// Uses gemini-2.5-flash-image-preview model
-// Reads GEMINI_API_KEY from .env
+// Generate plant disease sample images via Gemini for AI Skaner demo
+// Saves to public/demo-samples/
 
 import { GoogleGenAI } from "@google/genai";
 import fs from "node:fs/promises";
@@ -9,24 +8,18 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-// Load .env
 async function loadEnv() {
-  try {
-    const txt = await fs.readFile(path.join(__dirname, ".env"), "utf8");
-    for (const line of txt.split(/\r?\n/)) {
-      const m = line.match(/^\s*([A-Z_][A-Z0-9_]*)\s*=\s*(.+?)\s*$/);
-      if (m) process.env[m[1]] = m[2].replace(/^["']|["']$/g, "");
-    }
-  } catch (e) {
-    console.warn("Could not read .env:", e.message);
+  const txt = await fs.readFile(path.join(__dirname, ".env"), "utf8");
+  for (const line of txt.split(/\r?\n/)) {
+    const m = line.match(/^\s*([A-Z_][A-Z0-9_]*)\s*=\s*(.+?)\s*$/);
+    if (m) process.env[m[1]] = m[2].replace(/^["']|["']$/g, "");
   }
 }
-
 await loadEnv();
 
 const apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY;
 if (!apiKey) {
-  console.error("ERROR: GEMINI_API_KEY not found in .env");
+  console.error("ERROR: GEMINI_API_KEY not found");
   process.exit(1);
 }
 
@@ -35,23 +28,41 @@ const MODEL = "gemini-3.1-flash-image-preview";
 
 const targets = [
   {
-    outPath: path.join(__dirname, "public", "team", "abdulaziz.jpg"),
+    outPath: path.join(__dirname, "public", "demo-samples", "potato-blight.jpg"),
     prompt:
-      "Professional headshot portrait of a young Uzbek man named Abdulaziz, age around 25-30, " +
-      "short dark hair, clean modern look, wearing a smart casual emerald green or white shirt, " +
-      "warm friendly smile, soft natural lighting, shallow depth of field, neutral light background, " +
-      "high quality corporate photography style, suitable for a tech startup founder bio. " +
-      "Square aspect ratio, centered face.",
+      "Close-up photograph of a single potato plant leaf showing late blight disease " +
+      "(Phytophthora infestans). Visible symptoms: dark brown to black irregular lesions " +
+      "spreading from the leaf edges, water-soaked appearance, some yellowing around the spots, " +
+      "white fuzzy growth on the underside. Outdoor field setting with natural daylight, " +
+      "shallow depth of field, sharp focus on the diseased leaf, photographic realism, " +
+      "agricultural documentation style, square composition.",
   },
   {
-    outPath: path.join(__dirname, "public", "favicon.png"),
+    outPath: path.join(__dirname, "public", "demo-samples", "grape-mildew.jpg"),
     prompt:
-      "Minimalist flat icon for an agriculture AI app called 'Korgon AI'. " +
-      "A stylized green leaf shape combined with a subtle digital/circuit element, " +
-      "emerald and teal gradient on white background, " +
-      "centered, simple geometric shapes, app icon style, no text, " +
-      "rounded square format, suitable for use as a favicon. " +
-      "Modern, clean, professional.",
+      "Close-up photograph of a grape vine leaf showing powdery mildew disease (Erysiphe necator / oidium). " +
+      "Visible symptoms: distinctive white powdery fungal coating covering large patches of the leaf surface, " +
+      "some chlorotic yellow spots, slightly curled leaf edges. " +
+      "Vineyard setting with natural daylight, shallow depth of field, sharp focus, " +
+      "photographic realism, agricultural documentation style, square composition.",
+  },
+  {
+    outPath: path.join(__dirname, "public", "demo-samples", "healthy-leaf.jpg"),
+    prompt:
+      "Close-up photograph of a perfectly healthy bright green plant leaf, " +
+      "vibrant deep green color with clear vein pattern, glossy surface with morning dew drops, " +
+      "no spots, no discoloration, no damage. Natural outdoor lighting, " +
+      "shallow depth of field with soft blurred green background, sharp crisp focus on the leaf, " +
+      "photographic realism, agricultural documentation style, square composition.",
+  },
+  {
+    outPath: path.join(__dirname, "public", "demo-samples", "apple-scab.jpg"),
+    prompt:
+      "Close-up photograph of an apple tree leaf showing apple scab disease (Venturia inaequalis). " +
+      "Visible symptoms: olive-green to dark brown velvety spots scattered across the leaf surface, " +
+      "some spots merging into larger patches, slight leaf distortion and yellowing around lesions. " +
+      "Orchard setting with natural daylight, shallow depth of field, sharp focus on the diseased leaf, " +
+      "photographic realism, agricultural documentation style, square composition.",
   },
 ];
 
@@ -62,10 +73,9 @@ async function generateImage(prompt) {
   });
   const parts = response?.candidates?.[0]?.content?.parts ?? [];
   for (const part of parts) {
-    const data = part?.inlineData?.data ?? part?.inline_data?.data;
-    if (data) return data;
+    if (part?.inlineData?.data) return part.inlineData.data;
   }
-  throw new Error("No image data returned: " + JSON.stringify(response, null, 2).slice(0, 600));
+  throw new Error("No image data returned: " + JSON.stringify(response).slice(0, 400));
 }
 
 for (const t of targets) {
