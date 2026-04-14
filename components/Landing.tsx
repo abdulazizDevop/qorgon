@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import Pricing from './Pricing';
+import LaunchRoadmap from './LaunchRoadmap';
 
 interface LandingProps {
   onStart: () => void;
@@ -299,6 +301,12 @@ const Landing: React.FC<LandingProps> = ({ onStart }) => {
           </div>
         </div>
       </section>
+
+      {/* Pricing Section */}
+      <Pricing />
+
+      {/* Launch Roadmap Section */}
+      <LaunchRoadmap />
 
       {/* Interactive CTA Section */}
       <section className="py-24 relative z-10 bg-slate-50 pb-32">

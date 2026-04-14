@@ -13,6 +13,23 @@ const Navigation: React.FC<NavigationProps> = ({ userRole, onLogout }) => {
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  const handleHashNav = (e: React.MouseEvent, path: string) => {
+    if (!path.includes("#")) return;
+    e.preventDefault();
+    const [base, hash] = path.split("#");
+    setIsMobileMenuOpen(false);
+    const scrollToAnchor = () => {
+      const el = document.getElementById(hash);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+    if (location.pathname !== (base || "/")) {
+      navigate(base || "/");
+      window.setTimeout(scrollToAnchor, 80);
+    } else {
+      scrollToAnchor();
+    }
+  };
+
   const navItems: { path: string; label: string; roles: UserRole[] | "all" }[] =
     [
       { path: "/", label: "Bosh sahifa", roles: "all" },
@@ -65,6 +82,7 @@ const Navigation: React.FC<NavigationProps> = ({ userRole, onLogout }) => {
                 <Link
                   key={item.path}
                   to={item.path}
+                  onClick={(e) => handleHashNav(e, item.path)}
                   className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${
                     isActive
                       ? "bg-emerald-50 text-emerald-700"
@@ -153,7 +171,13 @@ const Navigation: React.FC<NavigationProps> = ({ userRole, onLogout }) => {
                 <Link
                   key={item.path}
                   to={item.path}
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={(e) => {
+                    if (item.path.includes("#")) {
+                      handleHashNav(e, item.path);
+                    } else {
+                      setIsMobileMenuOpen(false);
+                    }
+                  }}
                   className={`block px-4 py-3 rounded-xl text-base font-bold transition-all ${
                     isActive
                       ? "bg-emerald-50 text-emerald-700"
