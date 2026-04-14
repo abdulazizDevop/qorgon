@@ -1,15 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Activity, ShieldAlert, ShieldCheck, Sun, CloudRain, Leaf, ChevronRight, TrendingUp, TrendingDown, Clock, MapPin } from 'lucide-react';
+import DemoBadge from './DemoBadge';
+
+type Period = 'weekly' | 'monthly';
+
+const STATS_BY_PERIOD: Record<Period, { label: string; value: string; delta: string; isPositive: boolean }[]> = {
+  weekly: [
+    { label: 'Jami Skanerlar', value: '412', delta: '+12%', isPositive: true },
+    { label: 'Sogʻlom holat', value: '88%', delta: '+4%', isPositive: true },
+    { label: 'Aniqlangan xavflar', value: '14', delta: '-2 ta', isPositive: true },
+    { label: 'Hosil bashorati', value: 'A+', delta: 'Barqaror', isPositive: true },
+  ],
+  monthly: [
+    { label: 'Jami Skanerlar', value: '1 684', delta: '+28%', isPositive: true },
+    { label: 'Sogʻlom holat', value: '84%', delta: '+2%', isPositive: true },
+    { label: 'Aniqlangan xavflar', value: '63', delta: '+8 ta', isPositive: false },
+    { label: 'Hosil bashorati', value: 'A', delta: 'Yaxshi', isPositive: true },
+  ],
+};
 
 const Dashboard: React.FC = () => {
+  const [period, setPeriod] = useState<Period>('weekly');
+  const currentStats = STATS_BY_PERIOD[period];
+
   return (
     <div className="max-w-7xl mx-auto py-12 px-6 font-sans pb-24">
       {/* Header Section */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-10 mb-16">
         <div className="max-w-2xl">
-          <div className="flex items-center gap-2 mb-3">
-             <span className="w-2 h-2 bg-emerald-500 rounded-full animate-ping"></span>
-             <span className="text-emerald-600 font-bold uppercase tracking-[0.3em] text-[10px]">Real vaqt nazorati</span>
+          <div className="flex items-center gap-3 mb-3 flex-wrap">
+             <div className="flex items-center gap-2">
+               <span className="w-2 h-2 bg-emerald-500 rounded-full animate-ping"></span>
+               <span className="text-emerald-600 font-bold uppercase tracking-[0.3em] text-[10px]">Real vaqt nazorati</span>
+             </div>
+             <DemoBadge />
           </div>
           <h2 className="text-5xl md:text-6xl font-black text-slate-900 tracking-tight leading-none mb-4">
             Mening <span className="text-emerald-600">Statistikam</span>
@@ -21,47 +45,65 @@ const Dashboard: React.FC = () => {
         
         {/* Filter Toggle */}
         <div className="flex bg-white p-2 rounded-2xl shadow-xl shadow-slate-200/40 border border-slate-100 shrink-0">
-           <button className="px-8 py-3 bg-slate-900 text-white font-black rounded-xl text-xs transition-colors shadow-md">Haftalik</button>
-           <button className="px-8 py-3 text-slate-500 font-bold rounded-xl text-xs hover:bg-slate-50 transition-colors">Oylik</button>
+           <button
+             onClick={() => setPeriod('weekly')}
+             className={`px-8 py-3 font-black rounded-xl text-xs transition-all ${
+               period === 'weekly'
+                 ? 'bg-slate-900 text-white shadow-md'
+                 : 'text-slate-500 hover:bg-slate-50'
+             }`}
+           >
+             Haftalik
+           </button>
+           <button
+             onClick={() => setPeriod('monthly')}
+             className={`px-8 py-3 font-black rounded-xl text-xs transition-all ${
+               period === 'monthly'
+                 ? 'bg-slate-900 text-white shadow-md'
+                 : 'text-slate-500 hover:bg-slate-50'
+             }`}
+           >
+             Oylik
+           </button>
         </div>
       </div>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
         {[
-          { 
-            label: 'Jami Skanerlar', 
-            value: '412', 
-            delta: '+12%', 
-            isPositive: true,
-            icon: <Activity className="w-6 h-6 text-emerald-600" />, 
+          {
+            label: currentStats[0].label,
+            value: currentStats[0].value,
+            delta: currentStats[0].delta,
+            isPositive: currentStats[0].isPositive,
+            icon: <Activity className="w-6 h-6 text-emerald-600" />,
             colorClass: 'bg-emerald-50',
             borderClass: 'hover:border-emerald-200'
           },
-          { 
-            label: 'Sogʻlom holat', 
-            value: '88%', 
-            delta: '+4%', 
-            isPositive: true,
-            icon: <ShieldCheck className="w-6 h-6 text-blue-600" />, 
+          {
+            label: currentStats[1].label,
+            value: currentStats[1].value,
+            delta: currentStats[1].delta,
+            isPositive: currentStats[1].isPositive,
+            icon: <ShieldCheck className="w-6 h-6 text-blue-600" />,
             colorClass: 'bg-blue-50',
             borderClass: 'hover:border-blue-200'
           },
-          { 
-            label: 'Aniqlangan xavflar', 
-            value: '14', 
-            delta: '-2 ta', 
-            isPositive: true,
-            icon: <ShieldAlert className="w-6 h-6 text-red-600" />, 
+          {
+            label: currentStats[2].label,
+            value: currentStats[2].value,
+            delta: currentStats[2].delta,
+            isPositive: currentStats[2].isPositive,
+            icon: <ShieldAlert className="w-6 h-6 text-red-600" />,
             colorClass: 'bg-red-50',
             borderClass: 'hover:border-red-200'
           },
-          { 
-            label: 'Hosil bashorati', 
-            value: 'A+', 
-            delta: 'Barqaror', 
-            isPositive: true,
-            icon: <Leaf className="w-6 h-6 text-amber-600" />, 
+          {
+            label: currentStats[3].label,
+            value: currentStats[3].value,
+            delta: currentStats[3].delta,
+            isPositive: currentStats[3].isPositive,
+            icon: <Leaf className="w-6 h-6 text-amber-600" />,
             colorClass: 'bg-amber-50',
             borderClass: 'hover:border-amber-200'
           },

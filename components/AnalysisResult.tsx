@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AnalysisResult, HealthStatus, RiskLevel } from '../types';
-import { ShieldCheck, ShieldAlert, ArrowLeft, Download, Share2, Activity, Leaf, Droplets, ThermometerSun, AlertTriangle, CheckCircle2, Factory, Bug, ImageOff, Camera } from 'lucide-react';
+import { ShieldCheck, ShieldAlert, ArrowLeft, Printer, Share2, Activity, Leaf, Droplets, ThermometerSun, AlertTriangle, CheckCircle2, Factory, Bug, ImageOff, Camera, Check } from 'lucide-react';
 
 interface AnalysisResultProps {
   result: AnalysisResult;
@@ -9,6 +9,36 @@ interface AnalysisResultProps {
 }
 
 const AnalysisResultView: React.FC<AnalysisResultProps> = ({ result, imageUrl, onReset }) => {
+  const [shareStatus, setShareStatus] = useState<'idle' | 'copied'>('idle');
+
+  const handleShare = async () => {
+    const shareText = result.status === HealthStatus.HEALTHY
+      ? `Ko'rg'on AI tahlili: "${result.plant}" — sog'lom holat ✅`
+      : `Ko'rg'on AI tahlili: "${result.plant}" — ${result.disease_name} (${result.confidence} ishonch)`;
+    const shareData = {
+      title: "Ko'rg'on AI — Tahlil natijasi",
+      text: shareText,
+      url: typeof window !== 'undefined' ? window.location.origin : '',
+    };
+    try {
+      if (typeof navigator !== 'undefined' && (navigator as any).share) {
+        await (navigator as any).share(shareData);
+        return;
+      }
+      if (typeof navigator !== 'undefined' && navigator.clipboard) {
+        await navigator.clipboard.writeText(`${shareText}\n${shareData.url}`);
+        setShareStatus('copied');
+        window.setTimeout(() => setShareStatus('idle'), 2500);
+      }
+    } catch {
+      // User cancelled share dialog — silent
+    }
+  };
+
+  const handlePrint = () => {
+    if (typeof window !== 'undefined') window.print();
+  };
+
   const isHealthy = result.status === HealthStatus.HEALTHY;
   const isNotPlant = result.status === HealthStatus.NOT_PLANT || result.plant?.toLowerCase().includes("emas") || result.plant?.toLowerCase().includes("noma");
 
@@ -63,8 +93,19 @@ const AnalysisResultView: React.FC<AnalysisResultProps> = ({ result, imageUrl, o
             Ortga
           </button>
           <div className="flex w-full sm:w-auto gap-3">
-            <button className="flex-1 sm:flex-none px-5 py-3 bg-white border border-slate-200 rounded-2xl text-slate-700 font-bold text-sm shadow-sm flex items-center justify-center gap-2 hover:bg-slate-50 transition-all">
-              <Share2 className="w-4 h-4" /> Ulashish
+            <button
+              onClick={handleShare}
+              className="flex-1 sm:flex-none px-5 py-3 bg-white border border-slate-200 rounded-2xl text-slate-700 font-bold text-sm shadow-sm flex items-center justify-center gap-2 hover:bg-slate-50 hover:border-emerald-300 transition-all"
+            >
+              {shareStatus === 'copied' ? (
+                <>
+                  <Check className="w-4 h-4 text-emerald-600" /> Nusxa olindi
+                </>
+              ) : (
+                <>
+                  <Share2 className="w-4 h-4" /> Ulashish
+                </>
+              )}
             </button>
           </div>
         </div>
@@ -138,8 +179,25 @@ const AnalysisResultView: React.FC<AnalysisResultProps> = ({ result, imageUrl, o
           Yangi diagnostika
         </button>
         <div className="flex w-full sm:w-auto gap-3">
-          <button className="flex-1 sm:flex-none px-5 py-3 bg-white border border-slate-200 rounded-2xl text-slate-700 font-bold text-sm shadow-sm flex items-center justify-center gap-2 hover:bg-slate-50 transition-all">
-            <Share2 className="w-4 h-4" /> Ulashish
+          <button
+            onClick={handlePrint}
+            className="flex-1 sm:flex-none px-5 py-3 bg-white border border-slate-200 rounded-2xl text-slate-700 font-bold text-sm shadow-sm flex items-center justify-center gap-2 hover:bg-slate-50 hover:border-emerald-300 transition-all"
+          >
+            <Printer className="w-4 h-4" /> Chop etish
+          </button>
+          <button
+            onClick={handleShare}
+            className="flex-1 sm:flex-none px-5 py-3 bg-white border border-slate-200 rounded-2xl text-slate-700 font-bold text-sm shadow-sm flex items-center justify-center gap-2 hover:bg-slate-50 hover:border-emerald-300 transition-all"
+          >
+            {shareStatus === 'copied' ? (
+              <>
+                <Check className="w-4 h-4 text-emerald-600" /> Nusxa olindi
+              </>
+            ) : (
+              <>
+                <Share2 className="w-4 h-4" /> Ulashish
+              </>
+            )}
           </button>
         </div>
       </div>

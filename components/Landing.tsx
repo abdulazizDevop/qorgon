@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Pricing from './Pricing';
 import LaunchRoadmap from './LaunchRoadmap';
+import MarketStats from './MarketStats';
+import Comparison from './Comparison';
+import Testimonials from './Testimonials';
+import FAQ from './FAQ';
 
 interface LandingProps {
   onStart: () => void;
@@ -81,7 +85,7 @@ const Landing: React.FC<LandingProps> = ({ onStart }) => {
                         </div>
                      ))}
                    </div>
-                   <span><strong className="text-slate-900">10,000+</strong> marta tahlil</span>
+                   <span><strong className="text-slate-900">Beta testda</strong> sinaldi</span>
                 </div>
               </div>
             </div>
@@ -302,11 +306,23 @@ const Landing: React.FC<LandingProps> = ({ onStart }) => {
         </div>
       </section>
 
+      {/* Market Stats Section */}
+      <MarketStats />
+
+      {/* Comparison Section */}
+      <Comparison />
+
       {/* Pricing Section */}
       <Pricing />
 
+      {/* Testimonials Section */}
+      <Testimonials />
+
       {/* Launch Roadmap Section */}
       <LaunchRoadmap />
+
+      {/* FAQ Section */}
+      <FAQ />
 
       {/* Interactive CTA Section */}
       <section className="py-24 relative z-10 bg-slate-50 pb-32">

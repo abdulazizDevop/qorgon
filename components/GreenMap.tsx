@@ -3,6 +3,7 @@ import { RiskLevel } from '../types';
 import { MapContainer, TileLayer, CircleMarker, Popup, Tooltip } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Activity, ShieldAlert, ShieldCheck, TrendingUp, MapPin, AlertTriangle, CloudRain, Sun } from 'lucide-react';
+import DemoBadge from './DemoBadge';
 
 const UZ_REGIONS = [
   { id: 'uz-qr', name: 'Qoraqalpogʻiston', risk: RiskLevel.LOW, count: 24, main: 'Shoʻrlanish', lat: 43.5, lng: 59.0, trend: 'stable' },
@@ -54,9 +55,12 @@ const GreenMap: React.FC = () => {
       {/* Header Section Matches Database & Landing Style */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-10 mb-12">
         <div className="max-w-xl">
-          <div className="flex items-center gap-2 mb-3">
-             <span className="w-2 h-2 bg-emerald-500 rounded-full animate-ping"></span>
-             <span className="text-emerald-600 font-bold uppercase tracking-[0.3em] text-[10px]">Jonli Monitoring 24/7</span>
+          <div className="flex items-center gap-3 mb-3 flex-wrap">
+             <div className="flex items-center gap-2">
+               <span className="w-2 h-2 bg-emerald-500 rounded-full animate-ping"></span>
+               <span className="text-emerald-600 font-bold uppercase tracking-[0.3em] text-[10px]">Jonli Monitoring 24/7</span>
+             </div>
+             <DemoBadge />
           </div>
           <h2 className="text-5xl md:text-6xl font-black text-slate-900 leading-none tracking-tight">
             Yashil <span className="text-emerald-600">Xarita</span>
@@ -112,7 +116,10 @@ const GreenMap: React.FC = () => {
             <div className="absolute top-6 left-6 z-10 bg-white/90 backdrop-blur-md px-6 py-4 rounded-2xl shadow-lg border border-white flex flex-col gap-3 pointer-events-none">
               <h3 className="text-sm font-black text-slate-800 font-serif mb-1">Xavf Darajalari</h3>
               <div className="flex items-center gap-3">
-                <span className="w-3 h-3 rounded-full bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]"></span>
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]"></span>
+                </span>
                 <span className="text-xs font-bold text-slate-600 uppercase">Yuqori Xavf</span>
               </div>
               <div className="flex items-center gap-3">
@@ -233,7 +240,7 @@ const GreenMap: React.FC = () => {
                   <span className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
                     <CloudRain className="w-4 h-4" />
                   </span>
-                  <span className="text-xs font-black uppercase tracking-widest text-emerald-600">AI Prognoz • Mart 2026</span>
+                  <span className="text-xs font-black uppercase tracking-widest text-emerald-600">AI Prognoz • Aprel 2026</span>
                 </div>
                 <h3 className="text-2xl font-black mb-3 font-serif tracking-tight">Kutilyotgan o'zgarishlar</h3>
                 <p className="text-slate-600 text-sm leading-relaxed mb-8 font-sans font-medium">

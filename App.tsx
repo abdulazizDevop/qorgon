@@ -13,6 +13,7 @@ import Dashboard from './components/Dashboard';
 import Database from './components/Database';
 import AgroPharmacy from './components/AgroPharmacy';
 import AIAgronom from './components/AIAgronom';
+import Footer from './components/Footer';
 import { AnalysisResult, UserRole } from './types';
 import { analyzePlantImage } from './services/geminiService';
 
@@ -88,11 +89,7 @@ const AppContent: React.FC = () => {
           <Route path="*" element={<Landing onStart={handleStart} />} />
         </Routes>
       </main>
-      <footer className="bg-slate-900 text-slate-300 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-sm font-sans">&copy; {new Date().getFullYear()} Ko'rg'on Ai Platform. Barcha huquqlar himoyalangan.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

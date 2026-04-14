@@ -40,6 +40,18 @@ const AIAgronom: React.FC = () => {
     chatStore.sendMessage(msg);
   };
 
+  const suggestedPrompts = [
+    { icon: '🍅', text: 'Pomidorimning barglarida qora dog\'lar paydo bo\'ldi, nima qilish kerak?' },
+    { icon: '🍇', text: 'Uzumga oidium tushishini qanday oldini olish mumkin?' },
+    { icon: '🌾', text: 'Paxtaga qaysi davrda dori sepish eng samarali?' },
+    { icon: '🥔', text: 'Kartoshkaga fitoftoroz kasalligi qanday davolanadi?' },
+  ];
+
+  const handlePromptClick = (prompt: string) => {
+    if (isLoading) return;
+    chatStore.sendMessage(prompt);
+  };
+
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -235,6 +247,28 @@ const AIAgronom: React.FC = () => {
                   <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-bounce"></div>
                   <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-bounce delay-75"></div>
                   <div className="w-1.5 h-1.5 bg-emerald-600 rounded-full animate-bounce delay-150"></div>
+                </div>
+              </div>
+            )}
+
+            {messages.length <= 1 && !isLoading && (
+              <div className="pt-4">
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 px-1">
+                  Mashhur savollar
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {suggestedPrompts.map((p, i) => (
+                    <button
+                      key={i}
+                      onClick={() => handlePromptClick(p.text)}
+                      className="text-left flex items-start gap-3 p-3 rounded-2xl bg-white/70 hover:bg-white border border-emerald-100/50 hover:border-emerald-200 hover:shadow-md transition-all group"
+                    >
+                      <span className="text-xl shrink-0">{p.icon}</span>
+                      <span className="text-sm text-slate-700 leading-snug group-hover:text-slate-900">
+                        {p.text}
+                      </span>
+                    </button>
+                  ))}
                 </div>
               </div>
             )}
