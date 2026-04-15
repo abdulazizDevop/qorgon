@@ -14,8 +14,10 @@ import Database from './components/Database';
 import AgroPharmacy from './components/AgroPharmacy';
 import AIAgronom from './components/AIAgronom';
 import Footer from './components/Footer';
+import Paywall from './components/Paywall';
 import { AnalysisResult, UserRole } from './types';
 import { analyzePlantImage } from './services/geminiService';
+import { hasReachedLimit, incrementScanCount } from './services/usageTracker';
 
 const AppContent: React.FC = () => {
   const [userRole, setUserRole] = useState<UserRole | null>(UserRole.FARMER);
@@ -30,11 +32,18 @@ const AppContent: React.FC = () => {
   }, [navigate]);
 
   const handleImageSelected = async (base64: string) => {
+    if (hasReachedLimit()) {
+      navigate('/paywall');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
     setCurrentImageUrl(`data:image/jpeg;base64,${base64}`);
     navigate('/analyzer/loading');
-    
+
     try {
       const analysisResult = await analyzePlantImage(base64);
+      incrementScanCount();
       setResult(analysisResult);
       navigate('/analyzer/result');
     } catch (err: any) {
@@ -47,7 +56,11 @@ const AppContent: React.FC = () => {
   const handleReset = useCallback(() => {
     setResult(null);
     setError('');
-    navigate('/analyzer');
+    if (hasReachedLimit()) {
+      navigate('/paywall');
+    } else {
+      navigate('/analyzer');
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [navigate]);
 
@@ -64,7 +77,12 @@ const AppContent: React.FC = () => {
       <main className="flex-grow">
         <Routes>
           <Route path="/" element={<Landing onStart={handleStart} />} />
-          <Route path="/analyzer" element={result ? <Navigate to="/analyzer/result" replace /> : <UploadZone onImageSelected={handleImageSelected} />} />
+          <Route path="/analyzer" element={
+            hasReachedLimit()
+              ? <Navigate to="/paywall" replace />
+              : result ? <Navigate to="/analyzer/result" replace /> : <UploadZone onImageSelected={handleImageSelected} />
+          } />
+          <Route path="/paywall" element={<Paywall onReset={() => navigate('/analyzer')} />} />
           <Route path="/analyzer/loading" element={<Loading />} />
           <Route path="/analyzer/result" element={result ? <AnalysisResultView result={result} imageUrl={currentImageUrl} onReset={handleReset} /> : <UploadZone onImageSelected={handleImageSelected} />} />
           <Route path="/analyzer/error" element={<ErrorView message={error} onRetry={() => navigate('/analyzer')} />} />

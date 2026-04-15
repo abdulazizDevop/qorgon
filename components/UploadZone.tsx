@@ -1,6 +1,7 @@
 
 import React, { useState, useRef } from 'react';
-import { Upload, Camera, ImageIcon, Sparkles, Info } from 'lucide-react';
+import { Upload, Camera, ImageIcon, Sparkles, Info, Zap } from 'lucide-react';
+import { remainingScans, FREE_SCAN_LIMIT } from '../services/usageTracker';
 
 interface UploadZoneProps {
   onImageSelected: (base64: string) => void;
@@ -98,6 +99,9 @@ const UploadZone: React.FC<UploadZoneProps> = ({ onImageSelected }) => {
     if (e.target.files && e.target.files[0]) handleFiles(e.target.files);
   };
 
+  const remaining = remainingScans();
+  const showLimitWarning = remaining <= 2;
+
   return (
     <div className="max-w-4xl mx-auto py-12 px-4 pb-24">
       <div className="text-center mb-10">
@@ -105,6 +109,18 @@ const UploadZone: React.FC<UploadZoneProps> = ({ onImageSelected }) => {
           <Sparkles className="w-3 h-3" />
           AI Skaner
         </div>
+        {showLimitWarning && (
+          <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold mb-4 ml-2 ${
+            remaining === 0
+              ? 'bg-red-50 text-red-600 border border-red-100'
+              : remaining === 1
+                ? 'bg-amber-50 text-amber-700 border border-amber-200'
+                : 'bg-slate-50 text-slate-600 border border-slate-200'
+          }`}>
+            <Zap className="w-3 h-3" />
+            Bepul tahlillar: {remaining} / {FREE_SCAN_LIMIT}
+          </div>
+        )}
         <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-4 font-serif tracking-tight">
           O'simlik rasmini <span className="text-emerald-600 italic">yuklang</span>
         </h2>
